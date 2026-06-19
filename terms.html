@@ -1,84 +1,86 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Terms of Use — Sabr</title>
+<meta name="description" content="Sabr's Terms of Use (EULA), including subscription terms for Sabr Premium." />
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; line-height: 1.6;
-    color: #1c1c1e; background: #fff; }
-  @media (prefers-color-scheme: dark) { body { color: #e8e8ed; background: #0d0b1e; }
-    a { color: #b9a8ff; } }
-  h1 { font-size: 1.9rem; margin-top: 0; }
-  h2 { font-size: 1.25rem; margin-top: 2rem; }
-  h3 { font-size: 1.05rem; }
-  a { color: #6c4cf0; }
-  ul { padding-left: 1.3rem; }
-  nav { font-size: .9rem; margin-bottom: 24px; opacity: .8; }
-  footer { margin-top: 48px; font-size: .85rem; opacity: .6; }
-</style></head><body>
-<nav><a href="./index.html">Sabr</a> · <a href="./privacy.html">Privacy Policy</a> · <a href="./terms.html">Terms of Use</a></nav>
-<h1>Terms of Use (EULA) — Sabr</h1>
-<p><strong>Effective date:</strong> 18 June 2026</p>
-<p><strong>App:</strong> Sabr (iOS)</p>
-<p><strong>Developer:</strong> Nematzhon Rizayev</p>
-<h2>1. Acceptance</h2>
-<p>By downloading or using Sabr (&quot;the App&quot;), you agree to these Terms of Use. If you</p>
-<p>do not agree, do not use the App.</p>
-<h2>2. License</h2>
-<p>We grant you a personal, non-transferable, non-exclusive license to use the App</p>
-<p>on Apple devices that you own or control, as permitted by the Apple Media</p>
-<p>Services Terms and Conditions.</p>
-<h2>3. Subscriptions (Sabr Premium)</h2>
-<ul>
-<li><strong>Plans.</strong> Sabr Premium is offered as an auto-renewing subscription: <strong>Monthly</strong></li>
-</ul>
-<p>  and <strong>Annual</strong>. The Annual plan may include a free trial.</p>
-<ul>
-<li><strong>Free vs. paid.</strong> The free version includes one app limit and one quiet-hours</li>
-</ul>
-<p>  session, plus the full learning and earn-time features. Premium unlocks</p>
-<p>  unlimited app limits and sessions.</p>
-<ul>
-<li><strong>Price and billing.</strong> The price is shown in the App before purchase. Payment</li>
-</ul>
-<p>  is charged to your Apple Account at confirmation of purchase.</p>
-<ul>
-<li><strong>Renewal.</strong> The subscription automatically renews unless cancelled at least</li>
-</ul>
-<p>  24 hours before the end of the current period. Your Apple Account is charged</p>
-<p>  for renewal within 24 hours before the period ends.</p>
-<ul>
-<li><strong>Free trial.</strong> If offered, any unused portion of a free trial is forfeited</li>
-</ul>
-<p>  when you purchase a subscription.</p>
-<ul>
-<li><strong>Managing and cancelling.</strong> You can manage or cancel your subscription in</li>
-</ul>
-<p>  <strong>Settings → [your name] → Subscriptions</strong>, or via the <strong>Manage Subscription</strong></p>
-<p>  button inside the App.</p>
-<h2>4. The service</h2>
-<p>Sabr helps you limit distracting apps using Apple&#x27;s Screen Time technology and</p>
-<p>lets you earn screen time by completing short lessons. Sabr depends on Apple&#x27;s</p>
-<p>Family Controls, Device Activity, and Managed Settings frameworks; we do not</p>
-<p>guarantee that these system features will be available without interruption or</p>
-<p>error. Sabr is a self-discipline tool and is not a substitute for professional</p>
-<p>advice.</p>
-<h2>5. Religious content</h2>
-<p>Sabr includes educational content relating to the 99 Names of Allah, presented</p>
-<p>respectfully for learning purposes. We make reasonable efforts to ensure</p>
-<p>accuracy but provide the content &quot;as is.&quot;</p>
-<h2>6. Acceptable use</h2>
-<p>You agree not to misuse the App, reverse-engineer it except as permitted by law,</p>
-<p>or use it for any unlawful purpose.</p>
-<h2>7. Disclaimer and liability</h2>
-<p>THE APP IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTIES OF ANY KIND. TO THE MAXIMUM EXTENT</p>
-<p>PERMITTED BY LAW, WE ARE NOT LIABLE FOR ANY INDIRECT OR CONSEQUENTIAL DAMAGES</p>
-<p>ARISING FROM YOUR USE OF THE APP.</p>
-<h2>8. Changes</h2>
-<p>We may update these Terms; continued use after changes constitutes acceptance.</p>
-<h2>9. Contact</h2>
-<p><strong>nematzhon7@gmail.com</strong>.</p>
-<footer>Sabr — © 2026 Nematzhon Rizayev</footer>
-</body></html>
+  :root { --night:#0a0a14; --violet:#7d66f2; --violet-deep:#5a48c4; --lavender:#baa8ff; --gold:#d4b063; --card:rgba(255,255,255,.06); --card-line:rgba(255,255,255,.10); --text:#ece9f7; --muted:#a39fc0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--night); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .sky { position:fixed; inset:0; z-index:-1; background:var(--night); overflow:hidden; }
+  .sky::before { content:""; position:absolute; left:50%; top:-22%; transform:translateX(-50%); width:1000px; height:760px; border-radius:50%; background:radial-gradient(circle, rgba(125,102,242,.26), transparent 60%); }
+  .wrap { max-width:760px; margin:0 auto; padding:0 22px; }
+  nav { backdrop-filter:saturate(140%) blur(14px); background:rgba(10,10,20,.55); border-bottom:1px solid var(--card-line); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:var(--text); text-decoration:none; }
+  .brand .mark { width:28px; height:28px; border-radius:8px; background:linear-gradient(140deg,var(--violet),var(--violet-deep)); display:grid; place-items:center; color:#fff; font-weight:800; box-shadow:0 0 16px rgba(125,102,242,.5); }
+  .nav-inner a.back { color:var(--lavender); text-decoration:none; font-size:14px; font-weight:600; }
+  header.title { padding:54px 0 20px; border-bottom:1px solid var(--card-line); }
+  header.title h1 { font-size:34px; letter-spacing:-.4px; }
+  header.title .meta { color:var(--muted); margin-top:10px; font-size:15px; }
+  main { padding:38px 0 72px; }
+  main h2 { font-size:20px; margin:34px 0 10px; color:var(--lavender); }
+  main p { margin:0 0 14px; color:#d6d2ea; }
+  main ul { margin:0 0 14px 20px; color:#d6d2ea; }
+  main li { margin-bottom:8px; }
+  main strong { color:var(--text); }
+  a { color:var(--lavender); }
+  .caps { font-size:14px; color:var(--muted); }
+  footer { border-top:1px solid var(--card-line); padding:28px 0; font-size:13px; color:var(--muted); }
+  footer a { color:var(--lavender); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<nav><div class="wrap nav-inner"><a class="brand" href="index.html"><span class="mark">ص</span> Sabr</a><a class="back" href="index.html">← Home</a></div></nav>
+
+<header class="title">
+  <div class="wrap">
+    <h1>Terms of Use (EULA)</h1>
+    <p class="meta">Effective 18 June 2026 · Sabr (iOS) · Developer: Nematzhon Rizayev</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h2>1. Acceptance</h2>
+    <p>By downloading or using Sabr (“the App”), you agree to these Terms of Use. If you do not agree, do not use the App.</p>
+
+    <h2>2. License</h2>
+    <p>We grant you a personal, non-transferable, non-exclusive license to use the App on Apple devices that you own or control, as permitted by the Apple Media Services Terms and Conditions.</p>
+
+    <h2>3. Subscriptions (Sabr Premium)</h2>
+    <ul>
+      <li><strong>Plans.</strong> Sabr Premium is offered as an auto-renewing subscription: Monthly and Annual. The Annual plan may include a free trial.</li>
+      <li><strong>Free vs. paid.</strong> The free version includes one app limit and one quiet-hours session, plus the full learning and earn-time features. Premium unlocks unlimited app limits and sessions.</li>
+      <li><strong>Price and billing.</strong> The price is shown in the App before purchase. Payment is charged to your Apple Account at confirmation of purchase.</li>
+      <li><strong>Renewal.</strong> The subscription automatically renews unless cancelled at least 24 hours before the end of the current period. Your Apple Account is charged for renewal within 24 hours before the period ends.</li>
+      <li><strong>Free trial.</strong> If offered, any unused portion of a free trial is forfeited when you purchase a subscription.</li>
+      <li><strong>Managing and cancelling.</strong> You can manage or cancel your subscription in Settings → [your name] → Subscriptions, or via the Manage Subscription button inside the App.</li>
+    </ul>
+
+    <h2>4. The service</h2>
+    <p>Sabr helps you limit distracting apps using Apple's Screen Time technology and lets you earn screen time by completing short lessons. Sabr depends on Apple's Family Controls, Device Activity, and Managed Settings frameworks; we do not guarantee that these system features will be available without interruption or error. Sabr is a self-discipline tool and is not a substitute for professional advice.</p>
+
+    <h2>5. Religious content</h2>
+    <p>Sabr includes educational content relating to the 99 Names of Allah, presented respectfully for learning purposes. We make reasonable efforts to ensure accuracy but provide the content “as is.”</p>
+
+    <h2>6. Acceptable use</h2>
+    <p>You agree not to misuse the App, reverse-engineer it except as permitted by law, or use it for any unlawful purpose.</p>
+
+    <h2>7. Disclaimer and liability</h2>
+    <p class="caps">THE APP IS PROVIDED “AS IS” WITHOUT WARRANTIES OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE ARE NOT LIABLE FOR ANY INDIRECT OR CONSEQUENTIAL DAMAGES ARISING FROM YOUR USE OF THE APP.</p>
+
+    <h2>8. Changes</h2>
+    <p>We may update these Terms; continued use after changes constitutes acceptance.</p>
+
+    <h2>9. Contact</h2>
+    <p><a href="mailto:nematzhon7@gmail.com">nematzhon7@gmail.com</a></p>
+  </div>
+</main>
+
+<footer><div class="wrap">© 2026 Nematzhon Rizayev · <a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a></div></footer>
+</body>
+</html>

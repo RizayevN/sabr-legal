@@ -1,70 +1,75 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Privacy Policy — Sabr</title>
+<meta name="description" content="Sabr's privacy policy. Sabr collects no data — everything works on your device." />
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; line-height: 1.6;
-    color: #1c1c1e; background: #fff; }
-  @media (prefers-color-scheme: dark) { body { color: #e8e8ed; background: #0d0b1e; }
-    a { color: #b9a8ff; } }
-  h1 { font-size: 1.9rem; margin-top: 0; }
-  h2 { font-size: 1.25rem; margin-top: 2rem; }
-  h3 { font-size: 1.05rem; }
-  a { color: #6c4cf0; }
-  ul { padding-left: 1.3rem; }
-  nav { font-size: .9rem; margin-bottom: 24px; opacity: .8; }
-  footer { margin-top: 48px; font-size: .85rem; opacity: .6; }
-</style></head><body>
-<nav><a href="./index.html">Sabr</a> · <a href="./privacy.html">Privacy Policy</a> · <a href="./terms.html">Terms of Use</a></nav>
-<h1>Privacy Policy — Sabr</h1>
-<p><strong>Effective date:</strong> 18 June 2026</p>
-<p><strong>App:</strong> Sabr (iOS)</p>
-<p><strong>Developer:</strong> Nematzhon Rizayev</p>
-<h2>Summary</h2>
-<p>Sabr is designed to work entirely on your device. **We do not collect, store, or</p>
-<p>transmit your personal data.** Sabr has no account system, no analytics, and no</p>
-<p>advertising. It does not have its own servers.</p>
-<h2>What Sabr accesses, and why</h2>
-<p><strong>Screen Time data (Family Controls / Device Activity).</strong></p>
-<p>With your permission, Sabr uses Apple&#x27;s Family Controls and Device Activity</p>
-<p>frameworks to block the apps and websites you choose and to show your usage</p>
-<p>summary. This information is processed <strong>only on your device</strong> by Apple&#x27;s</p>
-<p>system. Sabr cannot read the underlying data, and none of it is ever sent off</p>
-<p>your device or shared with us or any third party. You can revoke this permission</p>
-<p>at any time in <strong>Settings → Screen Time</strong>.</p>
-<p><strong>Your blocking rules and learning progress.</strong></p>
-<p>The apps you choose to limit, your schedules, your quiz/match results, and your</p>
-<p>progress through the 99 Names are stored locally on your device (in an app</p>
-<p>group container and a local file). They are not uploaded anywhere. Deleting the</p>
-<p>app removes this data from your device.</p>
-<p><strong>Notifications.</strong></p>
-<p>If you allow notifications, Sabr sends you local reminders (for example, that</p>
-<p>you can earn screen time, or that an earned window has ended). These are</p>
-<p>generated on your device. Sabr does not use push notifications and does not</p>
-<p>collect a device token.</p>
-<h2>Purchases</h2>
-<p>Subscriptions (Sabr Premium) are processed by Apple through the App Store. Sabr</p>
-<p>uses Apple&#x27;s StoreKit to verify your subscription status on your device. We do</p>
-<p>not receive your name, payment details, or Apple Account information. Apple&#x27;s</p>
-<p>handling of your purchase is governed by Apple&#x27;s Privacy Policy.</p>
-<h2>Data we collect</h2>
-<p><strong>None.</strong> Sabr does not collect any data linked to your identity, does not track</p>
-<p>you across apps or websites, and contains no third-party SDKs.</p>
-<h2>Children</h2>
-<p>Sabr does not knowingly collect any personal information from anyone, including</p>
-<p>children. The app is rated 4+.</p>
-<h2>Your rights (GDPR / CCPA)</h2>
-<p>Because Sabr stores everything locally and collects no personal data, there is no</p>
-<p>personal information for us to access, correct, export, or delete on a server.</p>
-<p>You remain in full control of the on-device data and can erase it by deleting</p>
-<p>the app.</p>
-<h2>Changes</h2>
-<p>If this policy changes, we will update the effective date above and post the</p>
-<p>revised policy at the same URL.</p>
-<h2>Contact</h2>
-<p>Questions about this policy: <strong>nematzhon7@gmail.com</strong>.</p>
-<footer>Sabr — © 2026 Nematzhon Rizayev</footer>
-</body></html>
+  :root { --night:#0a0a14; --violet:#7d66f2; --violet-deep:#5a48c4; --lavender:#baa8ff; --gold:#d4b063; --card:rgba(255,255,255,.06); --card-line:rgba(255,255,255,.10); --text:#ece9f7; --muted:#a39fc0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--night); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .sky { position:fixed; inset:0; z-index:-1; background:var(--night); overflow:hidden; }
+  .sky::before { content:""; position:absolute; left:50%; top:-22%; transform:translateX(-50%); width:1000px; height:760px; border-radius:50%; background:radial-gradient(circle, rgba(125,102,242,.26), transparent 60%); }
+  .wrap { max-width:760px; margin:0 auto; padding:0 22px; }
+  nav { backdrop-filter:saturate(140%) blur(14px); background:rgba(10,10,20,.55); border-bottom:1px solid var(--card-line); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:var(--text); text-decoration:none; }
+  .brand .mark { width:28px; height:28px; border-radius:8px; background:linear-gradient(140deg,var(--violet),var(--violet-deep)); display:grid; place-items:center; color:#fff; font-weight:800; box-shadow:0 0 16px rgba(125,102,242,.5); }
+  .nav-inner a.back { color:var(--lavender); text-decoration:none; font-size:14px; font-weight:600; }
+  header.title { padding:54px 0 20px; border-bottom:1px solid var(--card-line); }
+  header.title h1 { font-size:34px; letter-spacing:-.4px; }
+  header.title .meta { color:var(--muted); margin-top:10px; font-size:15px; }
+  main { padding:38px 0 72px; }
+  main h2 { font-size:21px; margin:34px 0 10px; color:var(--lavender); }
+  main p { margin:0 0 14px; color:#d6d2ea; }
+  main strong { color:var(--text); }
+  a { color:var(--lavender); }
+  .note { background:var(--card); border:1px solid var(--card-line); border-left:3px solid var(--violet); border-radius:12px; padding:16px 18px; margin:20px 0; color:var(--text); }
+  footer { border-top:1px solid var(--card-line); padding:28px 0; font-size:13px; color:var(--muted); }
+  footer a { color:var(--lavender); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<nav><div class="wrap nav-inner"><a class="brand" href="index.html"><span class="mark">ص</span> Sabr</a><a class="back" href="index.html">← Home</a></div></nav>
+
+<header class="title">
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective 18 June 2026 · Sabr (iOS) · Developer: Nematzhon Rizayev</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="note"><strong>In short:</strong> Sabr works entirely on your device. We do not collect, store, or transmit your personal data. No account, no analytics, no advertising, no servers.</div>
+
+    <h2>What Sabr accesses, and why</h2>
+    <p><strong>Screen Time data (Family Controls / Device Activity).</strong> With your permission, Sabr uses Apple's Family Controls and Device Activity frameworks to block the apps and websites you choose and to show your usage summary. This information is processed <strong>only on your device</strong> by Apple's system. Sabr cannot read the underlying data, and none of it is ever sent off your device or shared with us or any third party. You can revoke this permission at any time in <strong>Settings → Screen Time</strong>.</p>
+    <p><strong>Your blocking rules and learning progress.</strong> The apps you choose to limit, your schedules, your quiz/match results, and your progress through the 99 Names are stored locally on your device (in an app group container and a local file). They are not uploaded anywhere. Deleting the app removes this data from your device.</p>
+    <p><strong>Notifications.</strong> If you allow notifications, Sabr sends you local reminders (for example, that you can earn screen time, or that an earned window has ended). These are generated on your device. Sabr does not use push notifications and does not collect a device token.</p>
+
+    <h2>Purchases</h2>
+    <p>Subscriptions (Sabr Premium) are processed by Apple through the App Store. Sabr uses Apple's StoreKit to verify your subscription status on your device. We do not receive your name, payment details, or Apple Account information. Apple's handling of your purchase is governed by Apple's Privacy Policy.</p>
+
+    <h2>Data we collect</h2>
+    <p><strong>None.</strong> Sabr does not collect any data linked to your identity, does not track you across apps or websites, and contains no third-party SDKs.</p>
+
+    <h2>Children</h2>
+    <p>Sabr does not knowingly collect any personal information from anyone, including children. The app is rated 4+.</p>
+
+    <h2>Your rights (GDPR / CCPA)</h2>
+    <p>Because Sabr stores everything locally and collects no personal data, there is no personal information for us to access, correct, export, or delete on a server. You remain in full control of the on-device data and can erase it by deleting the app.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, we will update the effective date above and post the revised policy at the same URL.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy: <a href="mailto:nematzhon7@gmail.com">nematzhon7@gmail.com</a>.</p>
+  </div>
+</main>
+
+<footer><div class="wrap">© 2026 Nematzhon Rizayev · <a href="index.html">Home</a> · <a href="terms.html">Terms of Use</a></div></footer>
+</body>
+</html>

@@ -1,29 +1,331 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Legal — Sabr</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sabr — Trade scrolling for remembrance</title>
+<meta name="description" content="Sabr blocks distracting apps and lets you earn your screen time back by learning the 99 Names of Allah. Private by design — everything stays on your device. Coming soon to the App Store." />
+
+<!-- Open Graph / social sharing -->
+<meta property="og:title" content="Sabr — Trade scrolling for remembrance" />
+<meta property="og:description" content="Block distracting apps and earn your screen time back by learning the 99 Names of Allah. Private by design. Coming soon to the App Store." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://rizayevn.github.io/sabr-legal/" />
+<meta name="twitter:card" content="summary_large_image" />
+
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; line-height: 1.6;
-    color: #1c1c1e; background: #fff; }
-  @media (prefers-color-scheme: dark) { body { color: #e8e8ed; background: #0d0b1e; }
-    a { color: #b9a8ff; } }
-  h1 { font-size: 1.9rem; margin-top: 0; }
-  h2 { font-size: 1.25rem; margin-top: 2rem; }
-  h3 { font-size: 1.05rem; }
-  a { color: #6c4cf0; }
-  ul { padding-left: 1.3rem; }
-  nav { font-size: .9rem; margin-bottom: 24px; opacity: .8; }
-  footer { margin-top: 48px; font-size: .85rem; opacity: .6; }
-</style></head><body>
-<nav><a href="./index.html">Sabr</a> · <a href="./privacy.html">Privacy Policy</a> · <a href="./terms.html">Terms of Use</a></nav>
-<h1>Sabr</h1>
-<p>Sabr is a screen-time control app that lets you earn your screen time back by learning. It works entirely on your device — no account, no tracking.</p>
-<ul>
-<li><a href="./privacy.html">Privacy Policy</a></li>
-<li><a href="./terms.html">Terms of Use</a></li>
-</ul>
-<footer>Sabr — © 2026 Nematzhon Rizayev</footer>
-</body></html>
+  :root {
+    --night: #0a0a14;
+    --night-2: #0f0f1d;
+    --violet: #7d66f2;
+    --violet-deep: #5a48c4;
+    --lavender: #baa8ff;
+    --gold: #d4b063;
+    --card: rgba(255,255,255,0.06);
+    --card-line: rgba(255,255,255,0.10);
+    --text: #ece9f7;
+    --muted: #a39fc0;
+    --radius: 20px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: var(--night);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Night sky background (fixed) ---------- */
+  .sky { position: fixed; inset: 0; z-index: -2; background: var(--night); overflow: hidden; }
+  /* violet glow at top, echoing the app's RadialGradient */
+  .sky::before {
+    content: ""; position: absolute; left: 50%; top: -18%; transform: translateX(-50%);
+    width: 1100px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(125,102,242,0.30), rgba(125,102,242,0.10) 38%, transparent 62%);
+    filter: blur(8px);
+  }
+  /* starfield: two tiled layers of tiny dots */
+  .stars {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      radial-gradient(1.2px 1.2px at 16px 24px, rgba(255,255,255,.85), transparent),
+      radial-gradient(1px 1px at 84px 66px, rgba(255,255,255,.55), transparent),
+      radial-gradient(1.4px 1.4px at 132px 18px, rgba(255,255,255,.7), transparent),
+      radial-gradient(1px 1px at 48px 118px, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 168px 96px, rgba(255,255,255,.6), transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: .55;
+  }
+  /* a single slow shooting star */
+  .meteor {
+    position: fixed; top: 12%; left: 70%; z-index: -1; width: 140px; height: 1.6px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.9));
+    transform: rotate(35deg); border-radius: 2px; opacity: 0;
+    animation: shoot 7s ease-in infinite; animation-delay: 2.5s;
+  }
+  @keyframes shoot {
+    0% { opacity: 0; transform: translate(0,0) rotate(35deg); }
+    6% { opacity: .9; }
+    14% { opacity: 0; transform: translate(-260px,182px) rotate(35deg); }
+    100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .meteor { display: none; } }
+
+  /* ---------- Nav ---------- */
+  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(14px); background: rgba(10,10,20,0.55); border-bottom: 1px solid var(--card-line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: .2px; }
+  .brand .mark {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(140deg, var(--violet), var(--violet-deep));
+    display: grid; place-items: center; color: #fff; font-size: 16px; font-weight: 800;
+    box-shadow: 0 0 18px rgba(125,102,242,.55);
+  }
+  .nav-cta { text-decoration: none; font-weight: 600; font-size: 14px; background: #fff; color: var(--night); padding: 9px 18px; border-radius: 999px; transition: transform .15s ease, box-shadow .15s ease; }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,255,255,.18); }
+
+  /* ---------- Hero ---------- */
+  header.hero { padding: 84px 0 64px; text-align: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--lavender);
+    background: var(--card); border: 1px solid var(--card-line); padding: 7px 15px; border-radius: 999px; margin-bottom: 26px;
+  }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 10px var(--violet); }
+  h1 { font-size: clamp(38px, 7vw, 64px); line-height: 1.06; letter-spacing: -1px; font-weight: 800; margin: 0 auto; max-width: 15ch; }
+  h1 .accent { background: linear-gradient(120deg, var(--lavender), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--muted); margin: 24px auto 34px; max-width: 56ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: center; }
+  .btn-primary {
+    text-decoration: none; font-weight: 700; font-size: 16px; color: var(--night); background: #fff;
+    padding: 15px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px;
+    transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 10px 34px rgba(0,0,0,.45);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(125,102,242,.4); }
+  .btn-ghost { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--text); padding: 14px 22px; border-radius: 999px; border: 1px solid var(--card-line); background: var(--card); transition: border-color .15s ease; }
+  .btn-ghost:hover { border-color: var(--lavender); }
+  .cta-note { font-size: 13px; color: var(--muted); margin-top: 18px; }
+
+  /* ---------- Section scaffolding ---------- */
+  section { padding: 66px 0; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 2.4px; font-size: 12px; font-weight: 700; color: var(--gold); }
+  h2 { font-size: clamp(27px, 4vw, 40px); line-height: 1.14; letter-spacing: -.5px; margin: 10px 0 14px; font-weight: 800; }
+  .section-sub { color: var(--muted); font-size: 17px; max-width: 60ch; }
+
+  /* ---------- How it works ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .card-base { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); }
+  .step { padding: 28px 24px; }
+  .step .num { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(140deg, rgba(125,102,242,.4), rgba(90,72,196,.25)); color: #fff; font-weight: 800; margin-bottom: 18px; box-shadow: 0 0 16px rgba(125,102,242,.35); }
+  .step h3 { font-size: 19px; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  /* ---------- Feature grid ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 38px; }
+  .feature { padding: 26px; display: flex; gap: 16px; align-items: flex-start; }
+  .feature .ic { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--card-line); font-size: 22px; }
+  .feature h3 { font-size: 18px; margin-bottom: 5px; }
+  .feature p { color: var(--muted); font-size: 15px; }
+
+  /* ---------- Privacy band ---------- */
+  .privacy-band { position: relative; overflow: hidden; text-align: center; border-radius: 26px; padding: 58px 30px; background: linear-gradient(140deg, rgba(125,102,242,.20), rgba(90,72,196,.10)); border: 1px solid var(--card-line); }
+  .privacy-band p { color: var(--muted); max-width: 58ch; margin: 0 auto; font-size: 17px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+  .pill { background: var(--card); border: 1px solid var(--card-line); color: var(--lavender); padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+
+  /* ---------- Coming soon CTA ---------- */
+  .beta { text-align: center; }
+  .beta .card { padding: 54px 30px; max-width: 720px; margin: 38px auto 0; background: var(--card); border: 1px solid var(--card-line); border-radius: 26px; }
+  .beta p { color: var(--muted); font-size: 17px; max-width: 50ch; margin: 0 auto 28px; }
+  .soon-badge { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 14px; border: 1px solid var(--card-line); background: rgba(255,255,255,.04); font-weight: 700; font-size: 16px; color: var(--text); }
+  .soon-badge .apple { font-size: 20px; }
+  .soon-badge small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .5px; }
+
+  /* ---------- FAQ ---------- */
+  details { background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; }
+  details summary { cursor: pointer; font-weight: 700; font-size: 17px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: "+"; font-size: 22px; color: var(--lavender); font-weight: 400; }
+  details[open] summary::after { content: "\2212"; }
+  details p { color: var(--muted); margin-top: 12px; font-size: 15px; }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--card-line); padding: 44px 0 40px; }
+  .foot-inner { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot-links a { text-decoration: none; color: var(--muted); font-size: 15px; }
+  .foot-links a:hover { color: var(--lavender); }
+  .foot-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .copyright { width: 100%; font-size: 13px; color: var(--muted); margin-top: 22px; }
+
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } .nav-cta { display: none; } section { padding: 52px 0; } }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="stars"></div>
+<div class="meteor"></div>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="mark">ص</span> Sabr</div>
+    <a class="nav-cta" href="#soon">Coming soon</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> Coming soon to the App Store</span>
+    <h1>Trade scrolling for <span class="accent">remembrance.</span></h1>
+    <p class="lede">
+      Sabr quietly blocks the apps that pull you in. To unlock screen time, you spend a moment
+      learning the 99 Names of Allah — turning every distraction into a small act of patience.
+    </p>
+    <div class="cta-row">
+      <a class="btn-primary" href="#how">See how it works →</a>
+      <a class="btn-ghost" href="#soon">Notify me at launch</a>
+    </div>
+    <p class="cta-note">For iPhone · iOS 17 or later · Private by design</p>
+  </div>
+</header>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how">
+  <div class="wrap">
+    <span class="eyebrow">How Sabr works</span>
+    <h2>Patience, by design.</h2>
+    <p class="section-sub">No shame, no streaks to lose. Just a gentle pause between you and the apps that take your time.</p>
+    <div class="steps">
+      <div class="step card-base">
+        <div class="num">1</div>
+        <h3>Choose what to limit</h3>
+        <p>Pick the distracting apps and set your quiet hours. Sabr blocks them using Apple's own Screen Time — nothing leaves your phone.</p>
+      </div>
+      <div class="step card-base">
+        <div class="num">2</div>
+        <h3>Earn time through dhikr</h3>
+        <p>When you reach for a blocked app, play a short Quiz or Match on the 99 Names of Allah to earn a window of access.</p>
+      </div>
+      <div class="step card-base">
+        <div class="num">3</div>
+        <h3>Grow in knowledge</h3>
+        <p>Every unlock teaches you something lasting. Over time, scrolling less and remembering more becomes a habit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">What's inside</span>
+    <h2>Small app. Big intention.</h2>
+    <div class="grid">
+      <div class="feature card-base">
+        <div class="ic">🕌</div>
+        <div><h3>Learn the 99 Names</h3><p>Beautiful, respectful lessons on the Asma ul-Husna — learned a little at a time, exactly when you need a pause.</p></div>
+      </div>
+      <div class="feature card-base">
+        <div class="ic">🎯</div>
+        <div><h3>Quiz or Match to unlock</h3><p>Choose the way you learn. A quick quiz or a memory match earns your screen time honestly.</p></div>
+      </div>
+      <div class="feature card-base">
+        <div class="ic">🌙</div>
+        <div><h3>Quiet hours</h3><p>Set focused windows — for prayer, study, sleep, or Ramadan — when distractions stay closed.</p></div>
+      </div>
+      <div class="feature card-base">
+        <div class="ic">🔒</div>
+        <div><h3>Private by design</h3><p>No account, no analytics, no ads, no servers. Everything stays on your device, always.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRIVACY BAND ================= -->
+<section>
+  <div class="wrap">
+    <div class="privacy-band">
+      <span class="eyebrow">Your data is yours</span>
+      <h2>Nothing leaves your phone.</h2>
+      <p>Sabr has no account system, no tracking, and no servers of its own. Your blocking rules, your progress, and your usage all live only on your device. We literally cannot see them.</p>
+      <div class="pill-row">
+        <span class="pill">No data collected</span>
+        <span class="pill">No tracking</span>
+        <span class="pill">No ads</span>
+        <span class="pill">On-device only</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMING SOON ================= -->
+<section class="beta" id="soon">
+  <div class="wrap">
+    <div class="card">
+      <span class="eyebrow">Launching soon</span>
+      <h2>Sabr is almost here.</h2>
+      <p>We're putting the final touches on Sabr before it arrives on the App Store. Want to know the moment it's live?</p>
+      <div class="cta-row">
+        <span class="soon-badge"><span class="apple"></span><span>Coming soon<small>to the App Store</small></span></span>
+        <a class="btn-primary" href="mailto:nematzhon7@gmail.com?subject=Notify%20me%20when%20Sabr%20launches">Email me at launch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section>
+  <div class="wrap" style="max-width: 760px;">
+    <span class="eyebrow">Questions</span>
+    <h2>Good to know</h2>
+    <div style="margin-top: 28px;">
+      <details open>
+        <summary>What does Sabr do?</summary>
+        <p>Sabr blocks the apps that distract you and lets you earn screen time back by learning the 99 Names of Allah through a short quiz or memory match — turning idle reaching-for-your-phone into a moment of remembrance.</p>
+      </details>
+      <details>
+        <summary>How much does it cost?</summary>
+        <p>The core learn-and-earn features are free. An optional Premium subscription unlocks unlimited app limits and quiet-hours sessions. Pricing is shown in the app before any purchase.</p>
+      </details>
+      <details>
+        <summary>Does Sabr collect any of my data?</summary>
+        <p>No. There is no account, no analytics, and no advertising. Your rules, progress, and usage stay on your device. Read the full <a href="privacy.html" style="color:var(--lavender);">Privacy Policy</a>.</p>
+      </details>
+      <details>
+        <summary>Why does it need Screen Time permission?</summary>
+        <p>Sabr uses Apple's Family Controls and Device Activity frameworks to block the apps you choose. This is processed entirely by Apple's system on your device — Sabr never reads the underlying data, and you can revoke it anytime in Settings → Screen Time.</p>
+      </details>
+      <details>
+        <summary>What do I need to run it?</summary>
+        <p>An iPhone running iOS 17 or later. Sabr will be available on the App Store soon.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><span class="brand"><span class="mark">ص</span> Sabr</span></div>
+      <div class="foot-links">
+        <a href="#how">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:nematzhon7@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Nematzhon Rizayev · Made with sabr.</div>
+  </div>
+</footer>
+
+</body>
+</html>
