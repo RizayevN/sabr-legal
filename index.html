@@ -145,6 +145,26 @@
   .soon-badge { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 14px; border: 1px solid var(--card-line); background: rgba(255,255,255,.04); font-weight: 700; font-size: 16px; color: var(--text); }
   .soon-badge .apple { font-size: 20px; }
   .soon-badge small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .5px; }
+  .signup { display: flex; gap: 10px; max-width: 440px; margin: 4px auto 0; flex-wrap: wrap; }
+  .signup input[type=email] {
+    flex: 1 1 220px; min-width: 0; font-size: 16px; color: var(--text);
+    background: rgba(255,255,255,.05); border: 1px solid var(--card-line);
+    border-radius: 999px; padding: 14px 20px; outline: none; transition: border-color .15s ease;
+  }
+  .signup input[type=email]::placeholder { color: var(--muted); }
+  .signup input[type=email]:focus { border-color: var(--lavender); }
+  .signup button {
+    flex: 0 0 auto; cursor: pointer; font-weight: 700; font-size: 16px; color: var(--night);
+    background: #fff; border: none; padding: 14px 26px; border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .signup button:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(125,102,242,.4); }
+  .signup button:disabled { opacity: .6; cursor: default; transform: none; box-shadow: none; }
+  .signup-note { font-size: 12.5px; color: var(--muted); margin-top: 14px; }
+  .form-msg { font-size: 16px; margin-top: 10px; min-height: 1.2em; }
+  .form-msg.ok { color: var(--lavender); font-weight: 600; }
+  .form-msg.err { color: #ff9aa2; }
+  .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
 
   /* ---------- FAQ ---------- */
   details { background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; }
@@ -271,12 +291,20 @@
   <div class="wrap">
     <div class="card">
       <span class="eyebrow">Launching soon</span>
-      <h2>Sabr is almost here.</h2>
-      <p>We're putting the final touches on Sabr before it arrives on the App Store. Want to know the moment it's live?</p>
-      <div class="cta-row">
-        <span class="soon-badge"><span class="apple"></span><span>Coming soon<small>to the App Store</small></span></span>
-        <a class="btn-primary" href="mailto:nematzhon7@gmail.com?subject=Notify%20me%20when%20Sabr%20launches">Email me at launch</a>
-      </div>
+      <h2>Be the first to know.</h2>
+      <p>We're putting the final touches on Sabr before it arrives on the App Store. Leave your email and we'll let you know the moment it's live.</p>
+
+      <form class="signup" id="notify-form" action="https://formsubmit.co/ajax/nematzhon7@gmail.com" method="POST">
+        <!-- honeypot for bots -->
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="New Sabr launch-notify signup" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" />
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="form-msg" id="notify-msg" role="status" aria-live="polite"></p>
+      <p class="signup-note">No spam, ever — one email when Sabr launches, then we'll leave you alone.</p>
     </div>
   </div>
 </section>
@@ -326,6 +354,44 @@
     <div class="copyright">© 2026 Nematzhon Rizayev · Made with sabr.</div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('notify-form');
+    var msg = document.getElementById('notify-msg');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button');
+      msg.className = 'form-msg';
+      msg.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok) {
+            form.reset();
+            msg.className = 'form-msg ok';
+            msg.textContent = '✓ You’re on the list. We’ll email you when Sabr launches.';
+            btn.textContent = 'Done';
+          } else {
+            throw new Error((res.d && res.d.message) || 'failed');
+          }
+        })
+        .catch(function () {
+          msg.className = 'form-msg err';
+          msg.textContent = 'Something went wrong. Please email nematzhon7@gmail.com instead.';
+          btn.disabled = false;
+          btn.textContent = 'Notify me';
+        });
+    });
+  })();
+</script>
 
 </body>
 </html>
