@@ -11,7 +11,12 @@
 <meta property="og:description" content="Block distracting apps and earn your screen time back by learning the 99 Names of Allah. Private by design. Coming soon to the App Store." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rizayevn.github.io/sabr-legal/" />
+<meta property="og:image" content="https://rizayevn.github.io/sabr-legal/icon.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://rizayevn.github.io/sabr-legal/icon.png" />
+
+<link rel="icon" type="image/png" href="icon.png" />
+<link rel="apple-touch-icon" href="icon.png" />
 
 <style>
   :root {
@@ -82,10 +87,12 @@
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: .2px; }
   .brand .mark {
-    width: 30px; height: 30px; border-radius: 9px;
-    background: linear-gradient(140deg, var(--violet), var(--violet-deep));
-    display: grid; place-items: center; color: #fff; font-size: 16px; font-weight: 800;
-    box-shadow: 0 0 18px rgba(125,102,242,.55);
+    width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block;
+    box-shadow: 0 0 18px rgba(125,102,242,.45);
+  }
+  .hero-icon {
+    width: 104px; height: 104px; border-radius: 24px; object-fit: cover; display: block;
+    margin: 0 auto 30px; box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 60px rgba(125,102,242,.45);
   }
   .nav-cta { text-decoration: none; font-weight: 600; font-size: 14px; background: #fff; color: var(--night); padding: 9px 18px; border-radius: 999px; transition: transform .15s ease, box-shadow .15s ease; }
   .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,255,255,.18); }
@@ -195,7 +202,7 @@
 <!-- ================= NAV ================= -->
 <nav>
   <div class="wrap nav-inner">
-    <div class="brand"><span class="mark">ص</span> Sabr</div>
+    <div class="brand"><img class="mark" src="icon.png" alt="Sabr app icon" width="32" height="32" /> Sabr</div>
     <a class="nav-cta" href="#soon">Coming soon</a>
   </div>
 </nav>
@@ -203,6 +210,7 @@
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="wrap">
+    <img class="hero-icon" src="icon.png" alt="Sabr app icon" width="104" height="104" />
     <span class="badge"><span class="dot"></span> Coming soon to the App Store</span>
     <h1>Trade scrolling for <span class="accent">remembrance.</span></h1>
     <p class="lede">
@@ -343,7 +351,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-inner">
-      <div class="foot-brand"><span class="brand"><span class="mark">ص</span> Sabr</span></div>
+      <div class="foot-brand"><span class="brand"><img class="mark" src="icon.png" alt="Sabr app icon" width="32" height="32" /> Sabr</span></div>
       <div class="foot-links">
         <a href="#how">How it works</a>
         <a href="privacy.html">Privacy</a>
