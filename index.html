@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sabr — Trade scrolling for remembrance</title>
-<meta name="description" content="Sabr blocks distracting apps and lets you earn your screen time back by learning the 99 Names of Allah. Private by design — everything stays on your device. Coming soon to the App Store." />
+<meta name="description" content="Sabr blocks distracting apps and lets you earn your screen time back by completing a short Islamic learning challenge — starting with the 99 Names of Allah, with more to come. Private by design. Coming soon to the App Store." />
 
 <!-- Open Graph / social sharing -->
 <meta property="og:title" content="Sabr — Trade scrolling for remembrance" />
-<meta property="og:description" content="Block distracting apps and earn your screen time back by learning the 99 Names of Allah. Private by design. Coming soon to the App Store." />
+<meta property="og:description" content="Block distracting apps and earn your screen time back by completing a short Islamic learning challenge — starting with the 99 Names of Allah, with more to come. Coming soon to the App Store." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rizayevn.github.io/sabr-legal/" />
 <meta property="og:image" content="https://rizayevn.github.io/sabr-legal/icon.png" />
@@ -139,6 +139,19 @@
   .feature h3 { font-size: 18px; margin-bottom: 5px; }
   .feature p { color: var(--muted); font-size: 15px; }
 
+  /* ---------- Challenges ---------- */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 38px; }
+  .challenge { padding: 24px 22px; display: flex; flex-direction: column; }
+  .challenge .ic { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--card-line); font-size: 22px; margin-bottom: 16px; }
+  .challenge h3 { font-size: 17px; margin-bottom: 6px; }
+  .challenge p { color: var(--muted); font-size: 14px; flex: 1 1 auto; }
+  .status { display: inline-flex; align-items: center; gap: 7px; align-self: flex-start; margin-top: 16px; font-size: 12px; font-weight: 700; letter-spacing: .3px; padding: 5px 12px; border-radius: 999px; }
+  .status.live { color: var(--night); background: var(--lavender); }
+  .status.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--violet-deep); }
+  .status.soon { color: var(--muted); background: var(--card); border: 1px solid var(--card-line); }
+  @media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .grid-4 { grid-template-columns: 1fr; } }
+
   /* ---------- Privacy band ---------- */
   .privacy-band { position: relative; overflow: hidden; text-align: center; border-radius: 26px; padding: 58px 30px; background: linear-gradient(140deg, rgba(125,102,242,.20), rgba(90,72,196,.10)); border: 1px solid var(--card-line); }
   .privacy-band p { color: var(--muted); max-width: 58ch; margin: 0 auto; font-size: 17px; }
@@ -214,8 +227,8 @@
     <span class="badge"><span class="dot"></span> Coming soon to the App Store</span>
     <h1>Trade scrolling for <span class="accent">remembrance.</span></h1>
     <p class="lede">
-      Sabr quietly blocks the apps that pull you in. To unlock screen time, you spend a moment
-      learning the 99 Names of Allah — turning every distraction into a small act of patience.
+      Sabr quietly blocks the apps that pull you in. To unlock screen time, you complete a short
+      Islamic learning challenge — turning every distraction into a small act of patience.
     </p>
     <div class="cta-row">
       <a class="btn-primary" href="#how">See how it works →</a>
@@ -239,8 +252,8 @@
       </div>
       <div class="step card-base">
         <div class="num">2</div>
-        <h3>Earn time through dhikr</h3>
-        <p>When you reach for a blocked app, play a short Quiz or Match on the 99 Names of Allah to earn a window of access.</p>
+        <h3>Complete a challenge</h3>
+        <p>When you reach for a blocked app, play a short Quiz or Match on what you're learning to earn a window of access.</p>
       </div>
       <div class="step card-base">
         <div class="num">3</div>
@@ -259,7 +272,7 @@
     <div class="grid">
       <div class="feature card-base">
         <div class="ic">🕌</div>
-        <div><h3>Learn the 99 Names</h3><p>Beautiful, respectful lessons on the Asma ul-Husna — learned a little at a time, exactly when you need a pause.</p></div>
+        <div><h3>A growing library</h3><p>Start with the 99 Names of Allah — with Duas, short Surahs, and Seerah on the way. More reasons to pause and learn.</p></div>
       </div>
       <div class="feature card-base">
         <div class="ic">🎯</div>
@@ -272,6 +285,41 @@
       <div class="feature card-base">
         <div class="ic">🔒</div>
         <div><h3>Private by design</h3><p>No account, no analytics, no ads, no servers. Everything stays on your device, always.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHALLENGES ================= -->
+<section id="challenges">
+  <div class="wrap">
+    <span class="eyebrow">A growing library</span>
+    <h2>Earn time by learning what lasts.</h2>
+    <p class="section-sub">Every unlock is a short challenge on something beneficial. The 99 Names are just the beginning — more challenges are on the way.</p>
+    <div class="grid-4">
+      <div class="challenge card-base">
+        <div class="ic">✨</div>
+        <h3>99 Names of Allah</h3>
+        <p>Learn the Most Beautiful Names with their meanings.</p>
+        <span class="status live">Available now</span>
+      </div>
+      <div class="challenge card-base">
+        <div class="ic">🤲</div>
+        <h3>Daily Duas</h3>
+        <p>Morning and evening supplications.</p>
+        <span class="status soon">Coming soon</span>
+      </div>
+      <div class="challenge card-base">
+        <div class="ic">📖</div>
+        <h3>Short Surahs</h3>
+        <p>Meanings of the surahs you recite in salah.</p>
+        <span class="status soon">Coming soon</span>
+      </div>
+      <div class="challenge card-base">
+        <div class="ic">🕰️</div>
+        <h3>Seerah</h3>
+        <p>The life of the Prophet ﷺ, step by step.</p>
+        <span class="status soon">Coming soon</span>
       </div>
     </div>
   </div>
@@ -325,7 +373,7 @@
     <div style="margin-top: 28px;">
       <details open>
         <summary>What does Sabr do?</summary>
-        <p>Sabr blocks the apps that distract you and lets you earn screen time back by learning the 99 Names of Allah through a short quiz or memory match — turning idle reaching-for-your-phone into a moment of remembrance.</p>
+        <p>Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.</p>
       </details>
       <details>
         <summary>How much does it cost?</summary>
