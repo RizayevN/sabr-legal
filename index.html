@@ -15,27 +15,37 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://rizayevn.github.io/sabr-legal/icon.png" />
 
+<!-- Language alternates -->
+<link rel="alternate" hreflang="en" href="https://rizayevn.github.io/sabr-legal/?lang=en" />
+<link rel="alternate" hreflang="ru" href="https://rizayevn.github.io/sabr-legal/?lang=ru" />
+<link rel="alternate" hreflang="kk" href="https://rizayevn.github.io/sabr-legal/?lang=kk" />
+<link rel="alternate" hreflang="x-default" href="https://rizayevn.github.io/sabr-legal/" />
+
 <link rel="icon" type="image/png" href="icon.png" />
 <link rel="apple-touch-icon" href="icon.png" />
 
 <style>
+  /* ===== Palette — "Eclipse" (mirrors Shared/Sources/Theme.swift) ===== */
   :root {
-    --night: #0a0a14;
-    --night-2: #0f0f1d;
-    --violet: #7d66f2;
-    --violet-deep: #5a48c4;
-    --lavender: #baa8ff;
-    --gold: #d4b063;
-    --card: rgba(255,255,255,0.06);
-    --card-line: rgba(255,255,255,0.10);
-    --text: #ece9f7;
-    --muted: #a39fc0;
+    --night: #0a0e16;          /* near-black blue ground */
+    --grad-top: #0c111b;       /* NightBackground top */
+    --grad-bottom: #080b12;    /* NightBackground bottom */
+    --card: #141925;           /* flat card fill */
+    --card-2: #1b2230;         /* raised surface */
+    --hair: rgba(255,255,255,0.08);
+    --accent: #3d7dff;         /* electric-blue accent */
+    --accent-2: #7fa8ff;       /* light blue */
+    --gold: #e0a93f;           /* mastery only */
+    --text: #f2f5fb;
+    --muted: #9aa6bd;
     --radius: 20px;
+    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-display: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-text);
     color: var(--text);
     background: var(--night);
     line-height: 1.6;
@@ -44,98 +54,84 @@
   }
   a { color: inherit; }
   .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+  h1, h2, h3, .brand { font-family: var(--font-display); }
 
-  /* ---------- Night sky background (fixed) ---------- */
-  .sky { position: fixed; inset: 0; z-index: -2; background: var(--night); overflow: hidden; }
-  /* violet glow at top, echoing the app's RadialGradient */
+  /* ---------- Background — flat "Eclipse" wash (quiet, no starfield) ---------- */
+  .sky { position: fixed; inset: 0; z-index: -2; background: linear-gradient(180deg, var(--grad-top), var(--grad-bottom)); overflow: hidden; }
+  /* one barely-there electric-blue radial behind the hero */
   .sky::before {
-    content: ""; position: absolute; left: 50%; top: -18%; transform: translateX(-50%);
-    width: 1100px; height: 900px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(125,102,242,0.30), rgba(125,102,242,0.10) 38%, transparent 62%);
-    filter: blur(8px);
+    content: ""; position: absolute; left: 50%; top: -8%; transform: translateX(-50%);
+    width: 900px; height: 600px; max-width: 120vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,125,255,0.13), transparent 62%);
+    filter: blur(10px);
   }
-  /* starfield: two tiled layers of tiny dots */
-  .stars {
-    position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background-image:
-      radial-gradient(1.2px 1.2px at 16px 24px, rgba(255,255,255,.85), transparent),
-      radial-gradient(1px 1px at 84px 66px, rgba(255,255,255,.55), transparent),
-      radial-gradient(1.4px 1.4px at 132px 18px, rgba(255,255,255,.7), transparent),
-      radial-gradient(1px 1px at 48px 118px, rgba(255,255,255,.5), transparent),
-      radial-gradient(1px 1px at 168px 96px, rgba(255,255,255,.6), transparent);
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    opacity: .55;
-  }
-  /* a single slow shooting star */
-  .meteor {
-    position: fixed; top: 12%; left: 70%; z-index: -1; width: 140px; height: 1.6px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,.9));
-    transform: rotate(35deg); border-radius: 2px; opacity: 0;
-    animation: shoot 7s ease-in infinite; animation-delay: 2.5s;
-  }
-  @keyframes shoot {
-    0% { opacity: 0; transform: translate(0,0) rotate(35deg); }
-    6% { opacity: .9; }
-    14% { opacity: 0; transform: translate(-260px,182px) rotate(35deg); }
-    100% { opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) { .meteor { display: none; } }
 
   /* ---------- Nav ---------- */
-  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(14px); background: rgba(10,10,20,0.55); border-bottom: 1px solid var(--card-line); }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(14px); background: rgba(10,14,22,0.62); border-bottom: 1px solid var(--hair); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: .2px; }
   .brand .mark {
     width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block;
-    box-shadow: 0 0 18px rgba(125,102,242,.45);
+    box-shadow: 0 0 16px rgba(61,125,255,.4);
   }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-cta { text-decoration: none; font-weight: 600; font-size: 14px; background: var(--accent); color: #fff; padding: 9px 18px; border-radius: 999px; transition: transform .15s ease, box-shadow .15s ease; }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(61,125,255,.4); }
+
+  /* ---------- Language switcher ---------- */
+  .lang { display: inline-flex; gap: 2px; padding: 3px; background: var(--card); border: 1px solid var(--hair); border-radius: 999px; }
+  .lang button {
+    border: none; background: transparent; color: var(--muted); font-family: var(--font-text);
+    font-size: 13px; font-weight: 700; letter-spacing: .3px; padding: 6px 11px; border-radius: 999px;
+    cursor: pointer; transition: background .15s ease, color .15s ease; line-height: 1;
+  }
+  .lang button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .lang button:hover:not([aria-pressed="true"]) { color: var(--text); }
+
   .hero-icon {
     width: 104px; height: 104px; border-radius: 24px; object-fit: cover; display: block;
-    margin: 0 auto 30px; box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 60px rgba(125,102,242,.45);
+    margin: 0 auto 30px; box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 60px rgba(61,125,255,.4);
   }
-  .nav-cta { text-decoration: none; font-weight: 600; font-size: 14px; background: #fff; color: var(--night); padding: 9px 18px; border-radius: 999px; transition: transform .15s ease, box-shadow .15s ease; }
-  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,255,255,.18); }
 
   /* ---------- Hero ---------- */
   header.hero { padding: 84px 0 64px; text-align: center; }
   .badge {
-    display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--lavender);
-    background: var(--card); border: 1px solid var(--card-line); padding: 7px 15px; border-radius: 999px; margin-bottom: 26px;
+    display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent-2);
+    background: var(--card); border: 1px solid var(--hair); padding: 7px 15px; border-radius: 999px; margin-bottom: 26px;
   }
-  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 10px var(--violet); }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
   h1 { font-size: clamp(38px, 7vw, 64px); line-height: 1.06; letter-spacing: -1px; font-weight: 800; margin: 0 auto; max-width: 15ch; }
-  h1 .accent { background: linear-gradient(120deg, var(--lavender), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1 .accent { background: linear-gradient(120deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--muted); margin: 24px auto 34px; max-width: 56ch; }
   .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: center; }
   .btn-primary {
-    text-decoration: none; font-weight: 700; font-size: 16px; color: var(--night); background: #fff;
+    text-decoration: none; font-weight: 700; font-size: 16px; color: #fff; background: var(--accent);
     padding: 15px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px;
-    transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 10px 34px rgba(0,0,0,.45);
+    transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 10px 30px rgba(61,125,255,.35);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(125,102,242,.4); }
-  .btn-ghost { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--text); padding: 14px 22px; border-radius: 999px; border: 1px solid var(--card-line); background: var(--card); transition: border-color .15s ease; }
-  .btn-ghost:hover { border-color: var(--lavender); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(61,125,255,.5); }
+  .btn-ghost { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--text); padding: 14px 22px; border-radius: 999px; border: 1px solid var(--hair); background: var(--card); transition: border-color .15s ease; }
+  .btn-ghost:hover { border-color: var(--accent-2); }
   .cta-note { font-size: 13px; color: var(--muted); margin-top: 18px; }
 
   /* ---------- Section scaffolding ---------- */
   section { padding: 66px 0; }
-  .eyebrow { text-transform: uppercase; letter-spacing: 2.4px; font-size: 12px; font-weight: 700; color: var(--gold); }
+  .eyebrow { text-transform: uppercase; letter-spacing: 2.4px; font-size: 12px; font-weight: 700; color: var(--accent-2); }
   h2 { font-size: clamp(27px, 4vw, 40px); line-height: 1.14; letter-spacing: -.5px; margin: 10px 0 14px; font-weight: 800; }
   .section-sub { color: var(--muted); font-size: 17px; max-width: 60ch; }
 
   /* ---------- How it works ---------- */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
-  .card-base { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); }
+  .card-base { background: var(--card); border: 1px solid var(--hair); border-radius: var(--radius); }
   .step { padding: 28px 24px; }
-  .step .num { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(140deg, rgba(125,102,242,.4), rgba(90,72,196,.25)); color: #fff; font-weight: 800; margin-bottom: 18px; box-shadow: 0 0 16px rgba(125,102,242,.35); }
+  .step .num { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(140deg, var(--accent), #2f5fd6); color: #fff; font-weight: 800; margin-bottom: 18px; box-shadow: 0 0 16px rgba(61,125,255,.35); }
   .step h3 { font-size: 19px; margin-bottom: 8px; }
   .step p { color: var(--muted); font-size: 15px; }
 
   /* ---------- Feature grid ---------- */
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 38px; }
   .feature { padding: 26px; display: flex; gap: 16px; align-items: flex-start; }
-  .feature .ic { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--card-line); font-size: 22px; }
+  .feature .ic { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card-2); border: 1px solid var(--hair); font-size: 22px; }
   .feature h3 { font-size: 18px; margin-bottom: 5px; }
   .feature p { color: var(--muted); font-size: 15px; }
 
@@ -144,71 +140,70 @@
   .spotlight .shot { justify-self: center; }
   .spotlight .shot img {
     width: 300px; max-width: 76vw; height: auto; border-radius: 30px; display: block;
-    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 70px rgba(125,102,242,.28);
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 70px rgba(61,125,255,.24);
   }
   .tag-new {
     display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
-    color: var(--night); background: var(--lavender); padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+    color: #fff; background: var(--accent); padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
   }
   .feat-list { list-style: none; margin-top: 24px; display: grid; gap: 15px; }
   .feat-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); font-size: 15.5px; }
-  .feat-list .tick { flex: 0 0 auto; color: var(--gold); font-size: 15px; line-height: 1.7; }
+  .feat-list .tick { flex: 0 0 auto; color: var(--accent-2); font-size: 15px; line-height: 1.7; }
   @media (max-width: 760px) { .spotlight { grid-template-columns: 1fr; gap: 30px; } }
 
   /* ---------- Challenges ---------- */
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 38px; }
   .challenge { padding: 24px 22px; display: flex; flex-direction: column; }
-  .challenge .ic { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--card-line); font-size: 22px; margin-bottom: 16px; }
+  .challenge .ic { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--card-2); border: 1px solid var(--hair); font-size: 22px; margin-bottom: 16px; }
   .challenge h3 { font-size: 17px; margin-bottom: 6px; }
   .challenge p { color: var(--muted); font-size: 14px; flex: 1 1 auto; }
   .status { display: inline-flex; align-items: center; gap: 7px; align-self: flex-start; margin-top: 16px; font-size: 12px; font-weight: 700; letter-spacing: .3px; padding: 5px 12px; border-radius: 999px; }
-  .status.live { color: var(--night); background: var(--lavender); }
-  .status.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--violet-deep); }
-  .status.soon { color: var(--muted); background: var(--card); border: 1px solid var(--card-line); }
+  /* gold reserved for mastery — the flagship 99 Names challenge */
+  .status.live { color: var(--gold); background: rgba(224,169,63,.14); border: 1px solid rgba(224,169,63,.32); }
+  .status.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .status.soon { color: var(--muted); background: var(--card-2); border: 1px solid var(--hair); }
   @media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .grid-4 { grid-template-columns: 1fr; } }
 
   /* ---------- Privacy band ---------- */
-  .privacy-band { position: relative; overflow: hidden; text-align: center; border-radius: 26px; padding: 58px 30px; background: linear-gradient(140deg, rgba(125,102,242,.20), rgba(90,72,196,.10)); border: 1px solid var(--card-line); }
+  .privacy-band { position: relative; overflow: hidden; text-align: center; border-radius: 26px; padding: 58px 30px; background: linear-gradient(140deg, rgba(61,125,255,.18), rgba(61,125,255,.05)); border: 1px solid var(--hair); }
   .privacy-band p { color: var(--muted); max-width: 58ch; margin: 0 auto; font-size: 17px; }
   .pill-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
-  .pill { background: var(--card); border: 1px solid var(--card-line); color: var(--lavender); padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+  .pill { background: var(--card); border: 1px solid var(--hair); color: var(--accent-2); padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; }
 
   /* ---------- Coming soon CTA ---------- */
   .beta { text-align: center; }
-  .beta .card { padding: 54px 30px; max-width: 720px; margin: 38px auto 0; background: var(--card); border: 1px solid var(--card-line); border-radius: 26px; }
+  .beta .card { padding: 54px 30px; max-width: 720px; margin: 38px auto 0; background: var(--card); border: 1px solid var(--hair); border-radius: 26px; }
   .beta p { color: var(--muted); font-size: 17px; max-width: 50ch; margin: 0 auto 28px; }
-  .soon-badge { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 14px; border: 1px solid var(--card-line); background: rgba(255,255,255,.04); font-weight: 700; font-size: 16px; color: var(--text); }
-  .soon-badge .apple { font-size: 20px; }
-  .soon-badge small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .5px; }
   .signup { display: flex; gap: 10px; max-width: 440px; margin: 4px auto 0; flex-wrap: wrap; }
   .signup input[type=email] {
     flex: 1 1 220px; min-width: 0; font-size: 16px; color: var(--text);
-    background: rgba(255,255,255,.05); border: 1px solid var(--card-line);
+    background: rgba(255,255,255,.05); border: 1px solid var(--hair);
     border-radius: 999px; padding: 14px 20px; outline: none; transition: border-color .15s ease;
   }
   .signup input[type=email]::placeholder { color: var(--muted); }
-  .signup input[type=email]:focus { border-color: var(--lavender); }
+  .signup input[type=email]:focus { border-color: var(--accent-2); }
   .signup button {
-    flex: 0 0 auto; cursor: pointer; font-weight: 700; font-size: 16px; color: var(--night);
-    background: #fff; border: none; padding: 14px 26px; border-radius: 999px;
+    flex: 0 0 auto; cursor: pointer; font-weight: 700; font-size: 16px; color: #fff;
+    background: var(--accent); border: none; padding: 14px 26px; border-radius: 999px;
     transition: transform .15s ease, box-shadow .15s ease;
   }
-  .signup button:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(125,102,242,.4); }
+  .signup button:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(61,125,255,.45); }
   .signup button:disabled { opacity: .6; cursor: default; transform: none; box-shadow: none; }
   .signup-note { font-size: 12.5px; color: var(--muted); margin-top: 14px; }
   .form-msg { font-size: 16px; margin-top: 10px; min-height: 1.2em; }
-  .form-msg.ok { color: var(--lavender); font-weight: 600; }
+  .form-msg.ok { color: var(--accent-2); font-weight: 600; }
   .form-msg.err { color: #ff9aa2; }
   .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
 
   /* ---------- FAQ ---------- */
-  details { background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; }
-  details summary { cursor: pointer; font-weight: 700; font-size: 17px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  details { background: var(--card); border: 1px solid var(--hair); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; }
+  details summary { cursor: pointer; font-weight: 700; font-size: 17px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
   details summary::-webkit-details-marker { display: none; }
-  details summary::after { content: "+"; font-size: 22px; color: var(--lavender); font-weight: 400; }
+  details summary::after { content: "+"; font-size: 22px; color: var(--accent-2); font-weight: 400; }
   details[open] summary::after { content: "\2212"; }
   details p { color: var(--muted); margin-top: 12px; font-size: 15px; }
+  details a { color: var(--accent-2); }
 
   /* ---------- Screens gallery ---------- */
   .screens-head { text-align: center; }
@@ -218,30 +213,29 @@
     overflow-x: auto; scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 10px 0 30px;
-    /* align first/last shots with the content column on wide screens */
     padding-inline: max(22px, calc((100vw - 1080px) / 2 + 22px));
     scroll-padding-inline: max(22px, calc((100vw - 1080px) / 2 + 22px));
   }
   .gallery::-webkit-scrollbar { height: 8px; }
   .gallery::-webkit-scrollbar-track { background: transparent; }
-  .gallery::-webkit-scrollbar-thumb { background: var(--card-line); border-radius: 999px; }
-  .gallery { scrollbar-width: thin; scrollbar-color: var(--card-line) transparent; }
+  .gallery::-webkit-scrollbar-thumb { background: var(--hair); border-radius: 999px; }
+  .gallery { scrollbar-width: thin; scrollbar-color: var(--hair) transparent; }
   .gallery img {
     flex: 0 0 auto; width: 292px; max-width: 76vw; height: auto;
     border-radius: 30px; scroll-snap-align: center; display: block;
     box-shadow: 0 18px 50px rgba(0,0,0,.55);
     transition: transform .2s ease, box-shadow .2s ease;
   }
-  .gallery img:hover { transform: translateY(-6px); box-shadow: 0 26px 60px rgba(125,102,242,.28); }
+  .gallery img:hover { transform: translateY(-6px); box-shadow: 0 26px 60px rgba(61,125,255,.24); }
   .swipe-hint { text-align: center; font-size: 13px; color: var(--muted); margin-top: 2px; }
   @media (hover: none) { .gallery img:hover { transform: none; } }
 
   /* ---------- Footer ---------- */
-  footer { border-top: 1px solid var(--card-line); padding: 44px 0 40px; }
+  footer { border-top: 1px solid var(--hair); padding: 44px 0 40px; }
   .foot-inner { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
   .foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
   .foot-links a { text-decoration: none; color: var(--muted); font-size: 15px; }
-  .foot-links a:hover { color: var(--lavender); }
+  .foot-links a:hover { color: var(--accent-2); }
   .foot-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
   .copyright { width: 100%; font-size: 13px; color: var(--muted); margin-top: 22px; }
 
@@ -251,14 +245,19 @@
 <body>
 
 <div class="sky"></div>
-<div class="stars"></div>
-<div class="meteor"></div>
 
 <!-- ================= NAV ================= -->
 <nav>
   <div class="wrap nav-inner">
     <div class="brand"><img class="mark" src="icon.png" alt="Sabr app icon" width="32" height="32" /> Sabr</div>
-    <a class="nav-cta" href="#soon">Coming soon</a>
+    <div class="nav-right">
+      <div class="lang" role="group" data-i18n-aria="switch.aria" aria-label="Change language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="kk">KK</button>
+      </div>
+      <a class="nav-cta" href="#soon" data-i18n="nav.cta">Coming soon</a>
+    </div>
   </div>
 </nav>
 
@@ -266,26 +265,26 @@
 <header class="hero">
   <div class="wrap">
     <img class="hero-icon" src="icon.png" alt="Sabr app icon" width="104" height="104" />
-    <span class="badge"><span class="dot"></span> Coming soon to the App Store</span>
-    <h1>Trade scrolling for <span class="accent">remembrance.</span></h1>
-    <p class="lede">
+    <span class="badge"><span class="dot"></span> <span data-i18n="hero.badge">Coming soon to the App Store</span></span>
+    <h1 data-i18n-html="hero.title">Trade scrolling for <span class="accent">remembrance.</span></h1>
+    <p class="lede" data-i18n="hero.lede">
       Sabr quietly blocks the apps that pull you in and pauses them for prayer. To unlock screen time,
       you complete a short Islamic learning challenge — turning every distraction into a small act of patience.
     </p>
     <div class="cta-row">
-      <a class="btn-primary" href="#how">See how it works →</a>
-      <a class="btn-ghost" href="#soon">Notify me at launch</a>
+      <a class="btn-primary" href="#how" data-i18n="hero.cta_primary">See how it works →</a>
+      <a class="btn-ghost" href="#soon" data-i18n="hero.cta_ghost">Notify me at launch</a>
     </div>
-    <p class="cta-note">For iPhone · iOS 17 or later · Private by design</p>
+    <p class="cta-note" data-i18n="hero.cta_note">For iPhone · iOS 17 or later · Private by design</p>
   </div>
 </header>
 
 <!-- ================= SCREENS GALLERY ================= -->
 <section id="screens" style="padding-bottom: 40px;">
   <div class="wrap screens-head">
-    <span class="eyebrow">See it in action</span>
-    <h2>A calmer home screen.</h2>
-    <p class="section-sub">From the moment you open a blocked app to the reflection at the end of your week — here's what Sabr looks like.</p>
+    <span class="eyebrow" data-i18n="screens.eyebrow">See it in action</span>
+    <h2 data-i18n="screens.h2">A calmer home screen.</h2>
+    <p class="section-sub" data-i18n="screens.sub">From the moment you open a blocked app to the reflection at the end of your week — here's what Sabr looks like.</p>
   </div>
   <div class="gallery" role="list" aria-label="Sabr app screenshots">
     <img role="listitem" src="screenshots/01-block.webp" width="292" height="633" loading="lazy" decoding="async" alt="Home screen showing today's screen time, apps used, and a locked-apps card with an Earn time button." />
@@ -298,30 +297,30 @@
     <img role="listitem" src="screenshots/02-prayer.webp" width="292" height="633" loading="lazy" decoding="async" alt="Prayer screen tracking four of five daily prayers with times and a streak." />
     <img role="listitem" src="screenshots/09-reflection.webp" width="292" height="633" loading="lazy" decoding="async" alt="Weekly reflection with days of sabr, focus wins, dhikr recited, and Names learned." />
   </div>
-  <p class="swipe-hint">Swipe to explore →</p>
+  <p class="swipe-hint" data-i18n="screens.swipe">Swipe to explore →</p>
 </section>
 
 <!-- ================= HOW IT WORKS ================= -->
 <section id="how">
   <div class="wrap">
-    <span class="eyebrow">How Sabr works</span>
-    <h2>Patience, by design.</h2>
-    <p class="section-sub">No shame, no nagging — just a gentle pause between you and the apps that take your time, and a streak that grows as you do.</p>
+    <span class="eyebrow" data-i18n="how.eyebrow">How Sabr works</span>
+    <h2 data-i18n="how.h2">Patience, by design.</h2>
+    <p class="section-sub" data-i18n="how.sub">No shame, no nagging — just a gentle pause between you and the apps that take your time, and a streak that grows as you do.</p>
     <div class="steps">
       <div class="step card-base">
         <div class="num">1</div>
-        <h3>Choose what to limit</h3>
-        <p>Pick the distracting apps and set your quiet hours. Sabr blocks them using Apple's own Screen Time — nothing leaves your phone.</p>
+        <h3 data-i18n="how.s1_h">Choose what to limit</h3>
+        <p data-i18n="how.s1_p">Pick the distracting apps and set your quiet hours. Sabr blocks them using Apple's own Screen Time — nothing leaves your phone.</p>
       </div>
       <div class="step card-base">
         <div class="num">2</div>
-        <h3>Complete a challenge</h3>
-        <p>When you reach for a blocked app, play a short Quiz or Match on what you're learning to earn a window of access.</p>
+        <h3 data-i18n="how.s2_h">Complete a challenge</h3>
+        <p data-i18n="how.s2_p">When you reach for a blocked app, play a short Quiz or Match on what you're learning to earn a window of access.</p>
       </div>
       <div class="step card-base">
         <div class="num">3</div>
-        <h3>Build your streak</h3>
-        <p>Every day under your limit grows your streak and earns badges — while every unlock teaches you something lasting.</p>
+        <h3 data-i18n="how.s3_h">Build your streak</h3>
+        <p data-i18n="how.s3_p">Every day under your limit grows your streak and earns badges — while every unlock teaches you something lasting.</p>
       </div>
     </div>
   </div>
@@ -335,15 +334,15 @@
         <img src="screenshots/02-prayer.webp" width="300" height="650" loading="lazy" decoding="async" alt="Sabr's Prayer screen tracking four of five daily prayers with times, a streak, and a Guarded badge." />
       </div>
       <div class="copy">
-        <span class="tag-new">New</span>
+        <span class="tag-new" data-i18n="prayer.tag_new">New</span>
         <span class="eyebrow">Prayer Guard</span>
-        <h2>Never miss a prayer.</h2>
-        <p class="section-sub">Sabr tracks your five daily prayers with accurate times for your location — and Prayer Guard quietly pauses your distracting apps at prayer time, until you've prayed.</p>
+        <h2 data-i18n="prayer.h2">Never miss a prayer.</h2>
+        <p class="section-sub" data-i18n="prayer.sub">Sabr tracks your five daily prayers with accurate times for your location — and Prayer Guard quietly pauses your distracting apps at prayer time, until you've prayed.</p>
         <ul class="feat-list">
-          <li><span class="tick">✦</span> Accurate prayer times for your location, with gentle reminders before each salah.</li>
-          <li><span class="tick">✦</span> Distracting apps stay paused through the prayer window until you mark it prayed.</li>
-          <li><span class="tick">✦</span> A prayer streak that grows for every day you keep all five.</li>
-          <li><span class="tick">✦</span> Times are calculated on your device — your location never leaves your phone.</li>
+          <li><span class="tick">✦</span> <span data-i18n="prayer.li1">Accurate prayer times for your location, with gentle reminders before each salah.</span></li>
+          <li><span class="tick">✦</span> <span data-i18n="prayer.li2">Distracting apps stay paused through the prayer window until you mark it prayed.</span></li>
+          <li><span class="tick">✦</span> <span data-i18n="prayer.li3">A prayer streak that grows for every day you keep all five.</span></li>
+          <li><span class="tick">✦</span> <span data-i18n="prayer.li4">Times are calculated on your device — your location never leaves your phone.</span></li>
         </ul>
       </div>
     </div>
@@ -353,24 +352,24 @@
 <!-- ================= FEATURES ================= -->
 <section>
   <div class="wrap">
-    <span class="eyebrow">What's inside</span>
-    <h2>Small app. Big intention.</h2>
+    <span class="eyebrow" data-i18n="features.eyebrow">What's inside</span>
+    <h2 data-i18n="features.h2">Small app. Big intention.</h2>
     <div class="grid">
       <div class="feature card-base">
         <div class="ic">🕌</div>
-        <div><h3>A growing library</h3><p>Start with the 99 Names of Allah — with Duas, short Surahs, and Seerah on the way. More reasons to pause and learn.</p></div>
+        <div><h3 data-i18n="f1.h">A growing library</h3><p data-i18n="f1.p">Start with the 99 Names of Allah — with Duas, short Surahs, and Seerah on the way. More reasons to pause and learn.</p></div>
       </div>
       <div class="feature card-base">
         <div class="ic">🔥</div>
-        <div><h3>Streaks &amp; badges</h3><p>Stay under your limit to grow your streak and unlock milestone badges. Miss a day? No guilt — just begin again.</p></div>
+        <div><h3 data-i18n="f2.h">Streaks &amp; badges</h3><p data-i18n="f2.p">Stay under your limit to grow your streak and unlock milestone badges. Miss a day? No guilt — just begin again.</p></div>
       </div>
       <div class="feature card-base">
         <div class="ic">🌙</div>
-        <div><h3>Quiet hours</h3><p>Set focused windows — for prayer, study, sleep, or Ramadan — when distractions stay closed.</p></div>
+        <div><h3 data-i18n="f3.h">Quiet hours</h3><p data-i18n="f3.p">Set focused windows — for prayer, study, sleep, or Ramadan — when distractions stay closed.</p></div>
       </div>
       <div class="feature card-base">
         <div class="ic">🔒</div>
-        <div><h3>Private by design</h3><p>No account, no analytics, no ads, no servers. Everything stays on your device, always.</p></div>
+        <div><h3 data-i18n="f4.h">Private by design</h3><p data-i18n="f4.p">No account, no analytics, no ads, no servers. Everything stays on your device, always.</p></div>
       </div>
     </div>
   </div>
@@ -379,33 +378,33 @@
 <!-- ================= CHALLENGES ================= -->
 <section id="challenges">
   <div class="wrap">
-    <span class="eyebrow">A growing library</span>
-    <h2>Earn time by learning what lasts.</h2>
-    <p class="section-sub">Every unlock is a short challenge on something beneficial. The 99 Names are just the beginning — more challenges are on the way.</p>
+    <span class="eyebrow" data-i18n="ch.eyebrow">A growing library</span>
+    <h2 data-i18n="ch.h2">Earn time by learning what lasts.</h2>
+    <p class="section-sub" data-i18n="ch.sub">Every unlock is a short challenge on something beneficial. The 99 Names are just the beginning — more challenges are on the way.</p>
     <div class="grid-4">
       <div class="challenge card-base">
         <div class="ic">✨</div>
-        <h3>99 Names of Allah</h3>
-        <p>Learn the Most Beautiful Names with their meanings.</p>
-        <span class="status live">Available now</span>
+        <h3 data-i18n="c1.h">99 Names of Allah</h3>
+        <p data-i18n="c1.p">Learn the Most Beautiful Names with their meanings.</p>
+        <span class="status live" data-i18n="status.live">Available now</span>
       </div>
       <div class="challenge card-base">
         <div class="ic">🤲</div>
-        <h3>Daily Duas</h3>
-        <p>Morning and evening supplications.</p>
-        <span class="status soon">Coming soon</span>
+        <h3 data-i18n="c2.h">Daily Duas</h3>
+        <p data-i18n="c2.p">Morning and evening supplications.</p>
+        <span class="status soon" data-i18n="status.soon">Coming soon</span>
       </div>
       <div class="challenge card-base">
         <div class="ic">📖</div>
-        <h3>Short Surahs</h3>
-        <p>Meanings of the surahs you recite in salah.</p>
-        <span class="status soon">Coming soon</span>
+        <h3 data-i18n="c3.h">Short Surahs</h3>
+        <p data-i18n="c3.p">Meanings of the surahs you recite in salah.</p>
+        <span class="status soon" data-i18n="status.soon">Coming soon</span>
       </div>
       <div class="challenge card-base">
         <div class="ic">🕰️</div>
-        <h3>Seerah</h3>
-        <p>The life of the Prophet ﷺ, step by step.</p>
-        <span class="status soon">Coming soon</span>
+        <h3 data-i18n="c4.h">Seerah</h3>
+        <p data-i18n="c4.p">The life of the Prophet ﷺ, step by step.</p>
+        <span class="status soon" data-i18n="status.soon">Coming soon</span>
       </div>
     </div>
   </div>
@@ -415,14 +414,14 @@
 <section>
   <div class="wrap">
     <div class="privacy-band">
-      <span class="eyebrow">Your data is yours</span>
-      <h2>Nothing leaves your phone.</h2>
-      <p>Sabr has no account system, no tracking, and no servers of its own. Your blocking rules, your progress, and your usage all live only on your device. We literally cannot see them.</p>
+      <span class="eyebrow" data-i18n="pb.eyebrow">Your data is yours</span>
+      <h2 data-i18n="pb.h2">Nothing leaves your phone.</h2>
+      <p data-i18n="pb.p">Sabr has no account system, no tracking, and no servers of its own. Your blocking rules, your progress, and your usage all live only on your device. We literally cannot see them.</p>
       <div class="pill-row">
-        <span class="pill">No data collected</span>
-        <span class="pill">No tracking</span>
-        <span class="pill">No ads</span>
-        <span class="pill">On-device only</span>
+        <span class="pill" data-i18n="pb.pill1">No data collected</span>
+        <span class="pill" data-i18n="pb.pill2">No tracking</span>
+        <span class="pill" data-i18n="pb.pill3">No ads</span>
+        <span class="pill" data-i18n="pb.pill4">On-device only</span>
       </div>
     </div>
   </div>
@@ -432,9 +431,9 @@
 <section class="beta" id="soon">
   <div class="wrap">
     <div class="card">
-      <span class="eyebrow">Launching soon</span>
-      <h2>Be the first to know.</h2>
-      <p>We're putting the final touches on Sabr before it arrives on the App Store. Leave your email and we'll let you know the moment it's live.</p>
+      <span class="eyebrow" data-i18n="beta.eyebrow">Launching soon</span>
+      <h2 data-i18n="beta.h2">Be the first to know.</h2>
+      <p data-i18n="beta.p">We're putting the final touches on Sabr before it arrives on the App Store. Leave your email and we'll let you know the moment it's live.</p>
 
       <form class="signup" id="notify-form" action="https://formsubmit.co/ajax/nematzhon7@gmail.com" method="POST">
         <!-- honeypot for bots -->
@@ -442,11 +441,11 @@
         <input type="hidden" name="_subject" value="New Sabr launch-notify signup" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
-        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" />
-        <button type="submit">Notify me</button>
+        <input type="email" name="email" placeholder="you@example.com" required data-i18n-aria="signup.aria" aria-label="Email address" />
+        <button type="submit" data-i18n="signup.button">Notify me</button>
       </form>
       <p class="form-msg" id="notify-msg" role="status" aria-live="polite"></p>
-      <p class="signup-note">No spam, ever — one email when Sabr launches, then we'll leave you alone.</p>
+      <p class="signup-note" data-i18n="signup.note">No spam, ever — one email when Sabr launches, then we'll leave you alone.</p>
     </div>
   </div>
 </section>
@@ -454,32 +453,32 @@
 <!-- ================= FAQ ================= -->
 <section>
   <div class="wrap" style="max-width: 760px;">
-    <span class="eyebrow">Questions</span>
-    <h2>Good to know</h2>
+    <span class="eyebrow" data-i18n="faq.eyebrow">Questions</span>
+    <h2 data-i18n="faq.h2">Good to know</h2>
     <div style="margin-top: 28px;">
       <details open>
-        <summary>What does Sabr do?</summary>
-        <p>Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It also tracks your five daily prayers, and Prayer Guard pauses your distracting apps at prayer time until you've prayed. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.</p>
+        <summary data-i18n="faq.q1">What does Sabr do?</summary>
+        <p data-i18n="faq.a1">Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It also tracks your five daily prayers, and Prayer Guard pauses your distracting apps at prayer time until you've prayed. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.</p>
       </details>
       <details>
-        <summary>How does Prayer Guard work?</summary>
-        <p>Sabr calculates your five daily prayer times for your location and reminds you before each salah. When a prayer comes in, Prayer Guard pauses your distracting apps for that window and keeps them paused until you mark the prayer as prayed — a gentle nudge to step away and pray. Every day you keep all five grows your prayer streak. Prayer times are computed entirely on your device.</p>
+        <summary data-i18n="faq.q2">How does Prayer Guard work?</summary>
+        <p data-i18n="faq.a2">Sabr calculates your five daily prayer times for your location and reminds you before each salah. When a prayer comes in, Prayer Guard pauses your distracting apps for that window and keeps them paused until you mark the prayer as prayed — a gentle nudge to step away and pray. Every day you keep all five grows your prayer streak. Prayer times are computed entirely on your device.</p>
       </details>
       <details>
-        <summary>How much does it cost?</summary>
-        <p>The core learn-and-earn features are free. An optional Premium subscription unlocks unlimited app limits and quiet-hours sessions. Pricing is shown in the app before any purchase.</p>
+        <summary data-i18n="faq.q3">How much does it cost?</summary>
+        <p data-i18n="faq.a3">The core learn-and-earn features are free. An optional Premium subscription unlocks unlimited app limits and quiet-hours sessions. Pricing is shown in the app before any purchase.</p>
       </details>
       <details>
-        <summary>Does Sabr collect any of my data?</summary>
-        <p>No. There is no account, no analytics, and no advertising. Your rules, progress, and usage stay on your device. Read the full <a href="privacy.html" style="color:var(--lavender);">Privacy Policy</a>.</p>
+        <summary data-i18n="faq.q4">Does Sabr collect any of my data?</summary>
+        <p data-i18n-html="faq.a4">No. There is no account, no analytics, and no advertising. Your rules, progress, and usage stay on your device. Read the full <a href="privacy.html">Privacy Policy</a>.</p>
       </details>
       <details>
-        <summary>Why does it need Screen Time permission?</summary>
-        <p>Sabr uses Apple's Family Controls and Device Activity frameworks to block the apps you choose. This is processed entirely by Apple's system on your device — Sabr never reads the underlying data, and you can revoke it anytime in Settings → Screen Time.</p>
+        <summary data-i18n="faq.q5">Why does it need Screen Time permission?</summary>
+        <p data-i18n="faq.a5">Sabr uses Apple's Family Controls and Device Activity frameworks to block the apps you choose. This is processed entirely by Apple's system on your device — Sabr never reads the underlying data, and you can revoke it anytime in Settings → Screen Time.</p>
       </details>
       <details>
-        <summary>What do I need to run it?</summary>
-        <p>An iPhone running iOS 17 or later. Sabr will be available on the App Store soon.</p>
+        <summary data-i18n="faq.q6">What do I need to run it?</summary>
+        <p data-i18n="faq.a6">An iPhone running iOS 17 or later. Sabr will be available on the App Store soon.</p>
       </details>
     </div>
   </div>
@@ -491,49 +490,398 @@
     <div class="foot-inner">
       <div class="foot-brand"><span class="brand"><img class="mark" src="icon.png" alt="Sabr app icon" width="32" height="32" /> Sabr</span></div>
       <div class="foot-links">
-        <a href="#how">How it works</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="mailto:nematzhon7@gmail.com">Contact</a>
+        <a href="#how" data-i18n="foot.how">How it works</a>
+        <a href="privacy.html" data-i18n="foot.privacy">Privacy</a>
+        <a href="terms.html" data-i18n="foot.terms">Terms</a>
+        <a href="mailto:nematzhon7@gmail.com" data-i18n="foot.contact">Contact</a>
       </div>
     </div>
-    <div class="copyright">© 2026 Nematzhon Rizayev · Made with sabr.</div>
+    <div class="copyright" data-i18n="foot.copy">© 2026 Nematzhon Rizayev · Made with sabr.</div>
   </div>
 </footer>
 
 <script>
+  // ===== i18n dictionary (en / ru / kk). Terminology grounded in
+  // APP_STORE_ASO.md + Sabr/Resources/Localizable.xcstrings. =====
+  var I18N = {
+    en: {
+      "meta.title": "Sabr — Trade scrolling for remembrance",
+      "meta.description": "Sabr blocks distracting apps and guards your prayers — Prayer Guard pauses them until you've prayed, and you earn screen time back by learning the 99 Names of Allah. Private by design. Coming soon to the App Store.",
+      "og.title": "Sabr — Trade scrolling for remembrance",
+      "og.description": "Block distracting apps, never miss a prayer with Prayer Guard, and earn your screen time back by learning the 99 Names of Allah. Coming soon to the App Store.",
+      "switch.aria": "Change language",
+      "nav.cta": "Coming soon",
+      "hero.badge": "Coming soon to the App Store",
+      "hero.title": 'Trade scrolling for <span class="accent">remembrance.</span>',
+      "hero.lede": "Sabr quietly blocks the apps that pull you in and pauses them for prayer. To unlock screen time, you complete a short Islamic learning challenge — turning every distraction into a small act of patience.",
+      "hero.cta_primary": "See how it works →",
+      "hero.cta_ghost": "Notify me at launch",
+      "hero.cta_note": "For iPhone · iOS 17 or later · Private by design",
+      "screens.eyebrow": "See it in action",
+      "screens.h2": "A calmer home screen.",
+      "screens.sub": "From the moment you open a blocked app to the reflection at the end of your week — here's what Sabr looks like.",
+      "screens.swipe": "Swipe to explore →",
+      "how.eyebrow": "How Sabr works",
+      "how.h2": "Patience, by design.",
+      "how.sub": "No shame, no nagging — just a gentle pause between you and the apps that take your time, and a streak that grows as you do.",
+      "how.s1_h": "Choose what to limit",
+      "how.s1_p": "Pick the distracting apps and set your quiet hours. Sabr blocks them using Apple's own Screen Time — nothing leaves your phone.",
+      "how.s2_h": "Complete a challenge",
+      "how.s2_p": "When you reach for a blocked app, play a short Quiz or Match on what you're learning to earn a window of access.",
+      "how.s3_h": "Build your streak",
+      "how.s3_p": "Every day under your limit grows your streak and earns badges — while every unlock teaches you something lasting.",
+      "prayer.tag_new": "New",
+      "prayer.h2": "Never miss a prayer.",
+      "prayer.sub": "Sabr tracks your five daily prayers with accurate times for your location — and Prayer Guard quietly pauses your distracting apps at prayer time, until you've prayed.",
+      "prayer.li1": "Accurate prayer times for your location, with gentle reminders before each salah.",
+      "prayer.li2": "Distracting apps stay paused through the prayer window until you mark it prayed.",
+      "prayer.li3": "A prayer streak that grows for every day you keep all five.",
+      "prayer.li4": "Times are calculated on your device — your location never leaves your phone.",
+      "features.eyebrow": "What's inside",
+      "features.h2": "Small app. Big intention.",
+      "f1.h": "A growing library",
+      "f1.p": "Start with the 99 Names of Allah — with Duas, short Surahs, and Seerah on the way. More reasons to pause and learn.",
+      "f2.h": "Streaks & badges",
+      "f2.p": "Stay under your limit to grow your streak and unlock milestone badges. Miss a day? No guilt — just begin again.",
+      "f3.h": "Quiet hours",
+      "f3.p": "Set focused windows — for prayer, study, sleep, or Ramadan — when distractions stay closed.",
+      "f4.h": "Private by design",
+      "f4.p": "No account, no analytics, no ads, no servers. Everything stays on your device, always.",
+      "ch.eyebrow": "A growing library",
+      "ch.h2": "Earn time by learning what lasts.",
+      "ch.sub": "Every unlock is a short challenge on something beneficial. The 99 Names are just the beginning — more challenges are on the way.",
+      "c1.h": "99 Names of Allah",
+      "c1.p": "Learn the Most Beautiful Names with their meanings.",
+      "status.live": "Available now",
+      "c2.h": "Daily Duas",
+      "c2.p": "Morning and evening supplications.",
+      "status.soon": "Coming soon",
+      "c3.h": "Short Surahs",
+      "c3.p": "Meanings of the surahs you recite in salah.",
+      "c4.h": "Seerah",
+      "c4.p": "The life of the Prophet ﷺ, step by step.",
+      "pb.eyebrow": "Your data is yours",
+      "pb.h2": "Nothing leaves your phone.",
+      "pb.p": "Sabr has no account system, no tracking, and no servers of its own. Your blocking rules, your progress, and your usage all live only on your device. We literally cannot see them.",
+      "pb.pill1": "No data collected",
+      "pb.pill2": "No tracking",
+      "pb.pill3": "No ads",
+      "pb.pill4": "On-device only",
+      "beta.eyebrow": "Launching soon",
+      "beta.h2": "Be the first to know.",
+      "beta.p": "We're putting the final touches on Sabr before it arrives on the App Store. Leave your email and we'll let you know the moment it's live.",
+      "signup.aria": "Email address",
+      "signup.button": "Notify me",
+      "signup.button_sending": "Sending…",
+      "signup.button_done": "Done",
+      "signup.ok": "✓ You're on the list. We'll email you when Sabr launches.",
+      "signup.err": "Something went wrong. Please email nematzhon7@gmail.com instead.",
+      "signup.note": "No spam, ever — one email when Sabr launches, then we'll leave you alone.",
+      "faq.eyebrow": "Questions",
+      "faq.h2": "Good to know",
+      "faq.q1": "What does Sabr do?",
+      "faq.a1": "Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It also tracks your five daily prayers, and Prayer Guard pauses your distracting apps at prayer time until you've prayed. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.",
+      "faq.q2": "How does Prayer Guard work?",
+      "faq.a2": "Sabr calculates your five daily prayer times for your location and reminds you before each salah. When a prayer comes in, Prayer Guard pauses your distracting apps for that window and keeps them paused until you mark the prayer as prayed — a gentle nudge to step away and pray. Every day you keep all five grows your prayer streak. Prayer times are computed entirely on your device.",
+      "faq.q3": "How much does it cost?",
+      "faq.a3": "The core learn-and-earn features are free. An optional Premium subscription unlocks unlimited app limits and quiet-hours sessions. Pricing is shown in the app before any purchase.",
+      "faq.q4": "Does Sabr collect any of my data?",
+      "faq.a4": 'No. There is no account, no analytics, and no advertising. Your rules, progress, and usage stay on your device. Read the full <a href="privacy.html">Privacy Policy</a>.',
+      "faq.q5": "Why does it need Screen Time permission?",
+      "faq.a5": "Sabr uses Apple's Family Controls and Device Activity frameworks to block the apps you choose. This is processed entirely by Apple's system on your device — Sabr never reads the underlying data, and you can revoke it anytime in Settings → Screen Time.",
+      "faq.q6": "What do I need to run it?",
+      "faq.a6": "An iPhone running iOS 17 or later. Sabr will be available on the App Store soon.",
+      "foot.how": "How it works",
+      "foot.privacy": "Privacy",
+      "foot.terms": "Terms",
+      "foot.contact": "Contact",
+      "foot.copy": "© 2026 Nematzhon Rizayev · Made with sabr."
+    },
+    ru: {
+      "meta.title": "Sabr — замени скроллинг на поминание",
+      "meta.description": "Sabr блокирует отвлекающие приложения и охраняет ваш намаз — Prayer Guard ставит их на паузу, пока вы не помолитесь, а экранное время возвращается за изучение 99 имён Аллаха. Приватность по умолчанию. Скоро в App Store.",
+      "og.title": "Sabr — замени скроллинг на поминание",
+      "og.description": "Блокируйте отвлекающие приложения, не пропускайте намаз с Prayer Guard и возвращайте экранное время, изучая 99 имён Аллаха. Скоро в App Store.",
+      "switch.aria": "Сменить язык",
+      "nav.cta": "Скоро",
+      "hero.badge": "Скоро в App Store",
+      "hero.title": 'Замени скроллинг на <span class="accent">поминание.</span>',
+      "hero.lede": "Sabr тихо блокирует приложения, которые вас затягивают, и ставит их на паузу для намаза. Чтобы вернуть экранное время, вы проходите короткое исламское задание — превращая каждое отвлечение в маленький акт терпения.",
+      "hero.cta_primary": "Как это работает →",
+      "hero.cta_ghost": "Сообщить о запуске",
+      "hero.cta_note": "Для iPhone · iOS 17 и новее · Приватность по умолчанию",
+      "screens.eyebrow": "Как это выглядит",
+      "screens.h2": "Спокойнее на главном экране.",
+      "screens.sub": "От момента, когда вы открываете заблокированное приложение, до итогов недели — вот как выглядит Sabr.",
+      "screens.swipe": "Листайте, чтобы посмотреть →",
+      "how.eyebrow": "Как работает Sabr",
+      "how.h2": "Терпение по замыслу.",
+      "how.sub": "Без стыда и упрёков — лишь мягкая пауза между вами и приложениями, крадущими время, и серия, которая растёт вместе с вами.",
+      "how.s1_h": "Выберите, что ограничить",
+      "how.s1_p": "Выберите отвлекающие приложения и задайте тихие часы. Sabr блокирует их через Apple Screen Time — ничего не покидает ваш телефон.",
+      "how.s2_h": "Пройдите задание",
+      "how.s2_p": "Когда вы тянетесь к заблокированному приложению, пройдите короткую «Викторину» или «Сопоставление» по тому, что изучаете, чтобы получить окно доступа.",
+      "how.s3_h": "Собирайте серию",
+      "how.s3_p": "Каждый день в пределах лимита увеличивает серию и открывает награды — а каждая разблокировка учит чему-то ценному.",
+      "prayer.tag_new": "Новое",
+      "prayer.h2": "Не пропускайте намаз.",
+      "prayer.sub": "Sabr отслеживает пять ежедневных намазов с точным временем для вашего местоположения — а Prayer Guard тихо ставит отвлекающие приложения на паузу во время намаза, пока вы не помолитесь.",
+      "prayer.li1": "Точное время намаза для вашего местоположения с мягкими напоминаниями перед каждым намазом.",
+      "prayer.li2": "Отвлекающие приложения остаются на паузе всё время намаза, пока вы не отметите его совершённым.",
+      "prayer.li3": "Серия намазов, которая растёт за каждый день, когда вы совершаете все пять.",
+      "prayer.li4": "Время рассчитывается на вашем устройстве — местоположение никогда не покидает телефон.",
+      "features.eyebrow": "Что внутри",
+      "features.h2": "Маленькое приложение. Большое намерение.",
+      "f1.h": "Растущая библиотека",
+      "f1.p": "Начните с 99 имён Аллаха — впереди дуа, короткие суры и сира. Больше поводов остановиться и узнать.",
+      "f2.h": "Серии и награды",
+      "f2.p": "Оставайтесь в пределах лимита, чтобы растить серию и открывать награды. Пропустили день? Без вины — просто начните снова.",
+      "f3.h": "Тихие часы",
+      "f3.p": "Задайте окна фокуса — для намаза, учёбы, сна или Рамадана — когда отвлечения закрыты.",
+      "f4.h": "Приватность по умолчанию",
+      "f4.p": "Нет аккаунта, аналитики, рекламы и серверов. Всё всегда остаётся на вашем устройстве.",
+      "ch.eyebrow": "Растущая библиотека",
+      "ch.h2": "Возвращайте время, изучая то, что остаётся.",
+      "ch.sub": "Каждая разблокировка — короткое задание о чём-то полезном. 99 имён — лишь начало, впереди больше заданий.",
+      "c1.h": "99 имён Аллаха",
+      "c1.p": "Изучайте прекраснейшие имена и их значения.",
+      "status.live": "Доступно",
+      "c2.h": "Ежедневные дуа",
+      "c2.p": "Утренние и вечерние мольбы.",
+      "status.soon": "Скоро",
+      "c3.h": "Короткие суры",
+      "c3.p": "Значения сур, которые вы читаете в намазе.",
+      "c4.h": "Сира",
+      "c4.p": "Жизнь Пророка ﷺ, шаг за шагом.",
+      "pb.eyebrow": "Ваши данные — ваши",
+      "pb.h2": "Ничего не покидает ваш телефон.",
+      "pb.p": "У Sabr нет системы аккаунтов, отслеживания и собственных серверов. Ваши правила блокировки, прогресс и статистика хранятся только на вашем устройстве. Мы буквально не можем их видеть.",
+      "pb.pill1": "Данные не собираются",
+      "pb.pill2": "Без отслеживания",
+      "pb.pill3": "Без рекламы",
+      "pb.pill4": "Только на устройстве",
+      "beta.eyebrow": "Скоро запуск",
+      "beta.h2": "Узнайте первыми.",
+      "beta.p": "Мы вносим последние штрихи в Sabr перед выходом в App Store. Оставьте email, и мы сообщим, как только он появится.",
+      "signup.aria": "Электронная почта",
+      "signup.button": "Сообщить мне",
+      "signup.button_sending": "Отправка…",
+      "signup.button_done": "Готово",
+      "signup.ok": "✓ Вы в списке. Мы напишем, когда Sabr выйдет.",
+      "signup.err": "Что-то пошло не так. Напишите на nematzhon7@gmail.com.",
+      "signup.note": "Никакого спама — одно письмо на запуске, и мы вас больше не потревожим.",
+      "faq.eyebrow": "Вопросы",
+      "faq.h2": "Полезно знать",
+      "faq.q1": "Что делает Sabr?",
+      "faq.a1": "Sabr блокирует отвлекающие приложения и позволяет вернуть экранное время, выполнив короткое исламское задание — быструю викторину или игру на сопоставление. Он также отслеживает пять ежедневных намазов, а Prayer Guard ставит отвлекающие приложения на паузу во время намаза, пока вы не помолитесь. Старт — с 99 имён Аллаха, а впереди новые задания (ежедневные дуа, короткие суры, сира).",
+      "faq.q2": "Как работает Prayer Guard?",
+      "faq.a2": "Sabr рассчитывает время пяти ежедневных намазов для вашего местоположения и напоминает перед каждым намазом. Когда наступает время намаза, Prayer Guard ставит отвлекающие приложения на паузу и держит их так, пока вы не отметите намаз совершённым — мягкое напоминание отложить телефон и помолиться. Каждый день со всеми пятью намазами растит вашу серию. Время намаза рассчитывается полностью на вашем устройстве.",
+      "faq.q3": "Сколько это стоит?",
+      "faq.a3": "Основные функции «учись и возвращай время» бесплатны. Необязательная подписка Premium открывает безлимитные лимиты приложений и сессии тихих часов. Цена показывается в приложении до покупки.",
+      "faq.q4": "Собирает ли Sabr мои данные?",
+      "faq.a4": 'Нет. Нет ни аккаунта, ни аналитики, ни рекламы. Ваши правила, прогресс и статистика остаются на устройстве. Читайте полную <a href="privacy.html">Политику конфиденциальности</a>.',
+      "faq.q5": "Зачем нужен доступ к Экранному времени?",
+      "faq.a5": "Sabr использует фреймворки Apple Family Controls и Device Activity, чтобы блокировать выбранные вами приложения. Всё обрабатывается системой Apple на вашем устройстве — Sabr не читает исходные данные, и вы можете отозвать доступ в любой момент в Настройки → Экранное время.",
+      "faq.q6": "Что нужно для запуска?",
+      "faq.a6": "iPhone с iOS 17 или новее. Sabr скоро появится в App Store.",
+      "foot.how": "Как работает",
+      "foot.privacy": "Конфиденциальность",
+      "foot.terms": "Условия",
+      "foot.contact": "Контакты",
+      "foot.copy": "© 2026 Nematzhon Rizayev · Сделано с сабром."
+    },
+    kk: {
+      "meta.title": "Sabr — скроллды зікірге айырбаста",
+      "meta.description": "Sabr алаңдататын қолданбаларды бұғаттайды әрі намазыңызды қорғайды — Prayer Guard оларды сіз намаз оқығанша кідіртеді, ал экран уақытын Аллаһтың 99 есімін үйреніп қайтарасыз. Әдепкі құпиялылық. Жақында App Store-да.",
+      "og.title": "Sabr — скроллды зікірге айырбаста",
+      "og.description": "Алаңдататын қолданбаларды бұғаттаңыз, Prayer Guard-пен намазды өткізіп алмаңыз және экран уақытын Аллаһтың 99 есімін үйреніп қайтарыңыз. Жақында App Store-да.",
+      "switch.aria": "Тілді ауыстыру",
+      "nav.cta": "Жақында",
+      "hero.badge": "Жақында App Store-да",
+      "hero.title": 'Скроллды <span class="accent">зікірге</span> айырбаста.',
+      "hero.lede": "Sabr сізді өзіне тартатын қолданбаларды жайлап бұғаттайды әрі намаз үшін кідіртеді. Экран уақытын ашу үшін қысқа исламдық тапсырманы орындайсыз — әр алаңдауды шағын сабыр ісіне айналдырасыз.",
+      "hero.cta_primary": "Қалай жұмыс істейді →",
+      "hero.cta_ghost": "Шыққанда хабарлаңыз",
+      "hero.cta_note": "iPhone үшін · iOS 17 және жаңасы · Әдепкі құпиялылық",
+      "screens.eyebrow": "Іс жүзінде",
+      "screens.h2": "Тынышырақ басты экран.",
+      "screens.sub": "Бұғатталған қолданбаны ашқан сәттен апта соңындағы толғанысқа дейін — Sabr осылай көрінеді.",
+      "screens.swipe": "Қарау үшін сипаңыз →",
+      "how.eyebrow": "Sabr қалай жұмыс істейді",
+      "how.h2": "Сабыр — негізінде.",
+      "how.sub": "Ұялту да, кінәлау да жоқ — тек сіз бен уақытыңызды алатын қолданбалар арасындағы жұмсақ кідіріс және сізбен бірге өсетін серия.",
+      "how.s1_h": "Нені шектейтініңізді таңдаңыз",
+      "how.s1_p": "Алаңдататын қолданбаларды таңдап, тыныш сағаттарды орнатыңыз. Sabr оларды Apple Screen Time арқылы бұғаттайды — телефоныңыздан ешнәрсе шықпайды.",
+      "how.s2_h": "Тапсырманы орындаңыз",
+      "how.s2_p": "Бұғатталған қолданбаға қол созғанда, үйреніп жүргеніңіз бойынша қысқа «Викторина» не «Сәйкестендіру» ойынын өтіп, кіру уақытын аласыз.",
+      "how.s3_h": "Серияңызды жинаңыз",
+      "how.s3_p": "Лимиттен аспаған әр күн серияңызды өсіріп, марапаттар ашады — ал әр ашу сізге маңызды нәрсе үйретеді.",
+      "prayer.tag_new": "Жаңа",
+      "prayer.h2": "Намазды өткізіп алмаңыз.",
+      "prayer.sub": "Sabr бес уақыт намазды сіздің орналасқан жеріңізге дәл уақытымен қадағалайды — ал Prayer Guard намаз уақытында алаңдататын қолданбаларды сіз намаз оқығанша жайлап кідіртеді.",
+      "prayer.li1": "Орналасқан жеріңізге дәл намаз уақыты және әр намаз алдында жұмсақ еске салулар.",
+      "prayer.li2": "Алаңдататын қолданбалар намаз уақыты бойы, сіз оны «оқылды» деп белгілегенше, кідіртілген күйде қалады.",
+      "prayer.li3": "Бес намазды түгел оқыған әр күніңіз үшін өсетін намаз сериясы.",
+      "prayer.li4": "Уақыт құрылғыңызда есептеледі — орналасқан жеріңіз телефоннан ешқашан шықпайды.",
+      "features.eyebrow": "Ішінде не бар",
+      "features.h2": "Шағын қосымша. Үлкен ниет.",
+      "f1.h": "Толығып келе жатқан кітапхана",
+      "f1.p": "Аллаһтың 99 есімінен бастаңыз — алда дұғалар, қысқа сүрелер және сира. Кідіріп, білуге көбірек себеп.",
+      "f2.h": "Сериялар мен марапаттар",
+      "f2.p": "Серияңызды өсіріп, белесті марапаттарды ашу үшін лимиттен аспаңыз. Бір күн өткізіп алдыңыз ба? Кінә жоқ — қайта бастаңыз.",
+      "f3.h": "Тыныш сағаттар",
+      "f3.p": "Фокус терезелерін орнатыңыз — намаз, оқу, ұйқы немесе Рамазан үшін — алаңдатулар жабық тұрады.",
+      "f4.h": "Әдепкі құпиялылық",
+      "f4.p": "Аккаунт жоқ, аналитика жоқ, жарнама жоқ, сервер жоқ. Бәрі әрқашан құрылғыңызда қалады.",
+      "ch.eyebrow": "Толығып келе жатқан кітапхана",
+      "ch.h2": "Мәңгілік нәрсені үйреніп, уақытты қайтарыңыз.",
+      "ch.sub": "Әр ашу — пайдалы нәрсе туралы қысқа тапсырма. 99 есім — тек басы, алда көбірек тапсырма.",
+      "c1.h": "Аллаһтың 99 есімі",
+      "c1.p": "Ең көркем есімдерді мағыналарымен үйреніңіз.",
+      "status.live": "Қолжетімді",
+      "c2.h": "Күнделікті дұғалар",
+      "c2.p": "Таңғы және кешкі дұғалар.",
+      "status.soon": "Жақында",
+      "c3.h": "Қысқа сүрелер",
+      "c3.p": "Намазда оқитын сүрелеріңіздің мағыналары.",
+      "c4.h": "Сира",
+      "c4.p": "Пайғамбардың ﷺ өмірі, қадам-қадаммен.",
+      "pb.eyebrow": "Деректеріңіз — өзіңіздікі",
+      "pb.h2": "Телефоныңыздан ешнәрсе шықпайды.",
+      "pb.p": "Sabr-да аккаунт жүйесі, трекинг және өз серверлері жоқ. Бұғаттау ережелеріңіз, прогресіңіз және статистикаңыз тек құрылғыңызда сақталады. Біз оларды сөзбе-сөз көре алмаймыз.",
+      "pb.pill1": "Дерек жиналмайды",
+      "pb.pill2": "Трекингсіз",
+      "pb.pill3": "Жарнамасыз",
+      "pb.pill4": "Тек құрылғыда",
+      "beta.eyebrow": "Жақында іске қосылады",
+      "beta.h2": "Бірінші болып біліңіз.",
+      "beta.p": "Sabr-ды App Store-ға шығармас бұрын соңғы дайындықтарды жасап жатырмыз. Email қалдырыңыз, шыққан сәтте хабарлаймыз.",
+      "signup.aria": "Электрондық пошта",
+      "signup.button": "Маған хабарлаңыз",
+      "signup.button_sending": "Жіберілуде…",
+      "signup.button_done": "Дайын",
+      "signup.ok": "✓ Сіз тізімдесіз. Sabr шыққанда email жібереміз.",
+      "signup.err": "Бірдеңе дұрыс болмады. nematzhon7@gmail.com-ға жазыңыз.",
+      "signup.note": "Спам жоқ — шыққанда бір хат, содан кейін мазаламаймыз.",
+      "faq.eyebrow": "Сұрақтар",
+      "faq.h2": "Білген жөн",
+      "faq.q1": "Sabr не істейді?",
+      "faq.a1": "Sabr алаңдататын қолданбаларды бұғаттайды әрі қысқа исламдық тапсырманы — жылдам викторина не сәйкестендіру ойынын — орындап, экран уақытын қайтаруға мүмкіндік береді. Сондай-ақ ол бес уақыт намазды қадағалайды, ал Prayer Guard намаз уақытында алаңдататын қолданбаларды сіз намаз оқығанша кідіртеді. Бастауы — Аллаһтың 99 есімі, алда жаңа тапсырмалар (күнделікті дұғалар, қысқа сүрелер, сира).",
+      "faq.q2": "Prayer Guard қалай жұмыс істейді?",
+      "faq.a2": "Sabr сіздің орналасқан жеріңізге бес уақыт намаздың уақытын есептеп, әр намаз алдында еске салады. Намаз уақыты келгенде Prayer Guard алаңдататын қолданбаларды кідіртеді де, сіз намазды «оқылды» деп белгілегенше кідіртілген күйде ұстайды — телефонды қойып, намаз оқуға жұмсақ түрткі. Бес намазды түгел оқыған әр күн намаз сериясын өсіреді. Намаз уақыты толығымен құрылғыңызда есептеледі.",
+      "faq.q3": "Бағасы қанша?",
+      "faq.a3": "«Үйрен де қайтар» негізгі мүмкіндіктер тегін. Қосымша Premium жазылымы шексіз қолданба лимиттері мен тыныш сағат сессияларын ашады. Баға сатып алу алдында қосымшада көрсетіледі.",
+      "faq.q4": "Sabr менің деректерімді жинай ма?",
+      "faq.a4": 'Жоқ. Аккаунт та, аналитика да, жарнама да жоқ. Ережелеріңіз, прогресіңіз және статистикаңыз құрылғыңызда қалады. Толық <a href="privacy.html">Құпиялылық саясатын</a> оқыңыз.',
+      "faq.q5": "Неге Экран уақытына рұқсат керек?",
+      "faq.a5": "Sabr сіз таңдаған қолданбаларды бұғаттау үшін Apple Family Controls және Device Activity фреймворктерін қолданады. Бәрі құрылғыңыздағы Apple жүйесінде өңделеді — Sabr негізгі деректерді ешқашан оқымайды, ал рұқсатты кез келген уақытта Параметрлер → Экран уақыты бөлімінде қайтарып ала аласыз.",
+      "faq.q6": "Іске қосу үшін не қажет?",
+      "faq.a6": "iOS 17 немесе жаңасы орнатылған iPhone. Sabr жақында App Store-да қолжетімді болады.",
+      "foot.how": "Қалай жұмыс істейді",
+      "foot.privacy": "Құпиялылық",
+      "foot.terms": "Шарттар",
+      "foot.contact": "Байланыс",
+      "foot.copy": "© 2026 Nematzhon Rizayev · Сабырмен жасалған."
+    }
+  };
+
+  var SUPPORTED = ["en", "ru", "kk"];
+
+  function pickInitialLang() {
+    try { var s = localStorage.getItem("sabrLang"); if (SUPPORTED.indexOf(s) !== -1) return s; } catch (e) {}
+    try {
+      var q = new URLSearchParams(location.search).get("lang");
+      if (SUPPORTED.indexOf(q) !== -1) return q;
+    } catch (e) {}
+    var langs = navigator.languages || [navigator.language || "en"];
+    for (var i = 0; i < langs.length; i++) {
+      var code = (langs[i] || "").slice(0, 2).toLowerCase();
+      if (code === "ru") return "ru";
+      if (code === "kk") return "kk";
+      if (code === "en") return "en";
+    }
+    return "en";
+  }
+
+  function setMeta(attr, val, content) {
+    if (content == null) return;
+    var m = document.querySelector('meta[' + attr + '="' + val + '"]');
+    if (m) m.setAttribute("content", content);
+  }
+
+  function applyLang(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) lang = "en";
+    var dict = I18N[lang] || I18N.en;
+    window.__sabrLang = lang;
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (dict[k] != null) el.textContent = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-html");
+      if (dict[k] != null) el.innerHTML = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-aria");
+      if (dict[k] != null) el.setAttribute("aria-label", dict[k]);
+    });
+
+    if (dict["meta.title"]) document.title = dict["meta.title"];
+    setMeta("name", "description", dict["meta.description"]);
+    setMeta("property", "og:title", dict["og.title"]);
+    setMeta("property", "og:description", dict["og.description"]);
+
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+  }
+
+  function setLang(lang) {
+    try { localStorage.setItem("sabrLang", lang); } catch (e) {}
+    applyLang(lang);
+  }
+
+  // ===== Wire up switcher + notify form =====
   (function () {
-    var form = document.getElementById('notify-form');
-    var msg = document.getElementById('notify-msg');
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+    });
+    applyLang(pickInitialLang());
+
+    var form = document.getElementById("notify-form");
+    var msg = document.getElementById("notify-msg");
     if (!form) return;
-    form.addEventListener('submit', function (e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var btn = form.querySelector('button');
-      msg.className = 'form-msg';
-      msg.textContent = '';
+      var d = I18N[window.__sabrLang || "en"] || I18N.en;
+      var btn = form.querySelector("button");
+      msg.className = "form-msg";
+      msg.textContent = "";
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = d["signup.button_sending"];
       fetch(form.action, {
-        method: 'POST',
+        method: "POST",
         body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: { "Accept": "application/json" }
       })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (dd) { return { ok: r.ok, d: dd }; }); })
         .then(function (res) {
           if (res.ok) {
             form.reset();
-            msg.className = 'form-msg ok';
-            msg.textContent = '✓ You’re on the list. We’ll email you when Sabr launches.';
-            btn.textContent = 'Done';
+            msg.className = "form-msg ok";
+            msg.textContent = d["signup.ok"];
+            btn.textContent = d["signup.button_done"];
           } else {
-            throw new Error((res.d && res.d.message) || 'failed');
+            throw new Error((res.d && res.d.message) || "failed");
           }
         })
         .catch(function () {
-          msg.className = 'form-msg err';
-          msg.textContent = 'Something went wrong. Please email nematzhon7@gmail.com instead.';
+          msg.className = "form-msg err";
+          msg.textContent = d["signup.err"];
           btn.disabled = false;
-          btn.textContent = 'Notify me';
+          btn.textContent = d["signup.button"];
         });
     });
   })();

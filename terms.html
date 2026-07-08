@@ -8,35 +8,60 @@
 <link rel="icon" type="image/png" href="icon.png" />
 <link rel="apple-touch-icon" href="icon.png" />
 <style>
-  :root { --night:#0a0a14; --violet:#7d66f2; --violet-deep:#5a48c4; --lavender:#baa8ff; --gold:#d4b063; --card:rgba(255,255,255,.06); --card-line:rgba(255,255,255,.10); --text:#ece9f7; --muted:#a39fc0; }
+  /* Palette — "Eclipse" (mirrors Shared/Sources/Theme.swift) */
+  :root {
+    --night:#0a0e16; --grad-top:#0c111b; --grad-bottom:#080b12; --card:#141925;
+    --hair:rgba(255,255,255,.08); --accent:#3d7dff; --accent-2:#7fa8ff; --gold:#e0a93f;
+    --text:#f2f5fb; --muted:#9aa6bd;
+    --font-text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-display:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--night); line-height:1.7; -webkit-font-smoothing:antialiased; }
-  .sky { position:fixed; inset:0; z-index:-1; background:var(--night); overflow:hidden; }
-  .sky::before { content:""; position:absolute; left:50%; top:-22%; transform:translateX(-50%); width:1000px; height:760px; border-radius:50%; background:radial-gradient(circle, rgba(125,102,242,.26), transparent 60%); }
+  body { font-family:var(--font-text); color:var(--text); background:var(--night); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .sky { position:fixed; inset:0; z-index:-1; background:linear-gradient(180deg,var(--grad-top),var(--grad-bottom)); overflow:hidden; }
+  .sky::before { content:""; position:absolute; left:50%; top:-10%; transform:translateX(-50%); width:900px; height:600px; max-width:120vw; border-radius:50%; background:radial-gradient(circle, rgba(61,125,255,.12), transparent 62%); filter:blur(10px); }
   .wrap { max-width:760px; margin:0 auto; padding:0 22px; }
-  nav { backdrop-filter:saturate(140%) blur(14px); background:rgba(10,10,20,.55); border-bottom:1px solid var(--card-line); }
-  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:62px; }
-  .brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:var(--text); text-decoration:none; }
-  .brand .mark { width:28px; height:28px; border-radius:8px; object-fit:cover; display:block; box-shadow:0 0 16px rgba(125,102,242,.45); }
-  .nav-inner a.back { color:var(--lavender); text-decoration:none; font-size:14px; font-weight:600; }
-  header.title { padding:54px 0 20px; border-bottom:1px solid var(--card-line); }
-  header.title h1 { font-size:34px; letter-spacing:-.4px; }
+  nav { position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(14px); background:rgba(10,14,22,.62); border-bottom:1px solid var(--hair); }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:62px; gap:12px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; color:var(--text); text-decoration:none; font-family:var(--font-display); }
+  .brand .mark { width:28px; height:28px; border-radius:8px; object-fit:cover; display:block; box-shadow:0 0 16px rgba(61,125,255,.4); }
+  .nav-right { display:flex; align-items:center; gap:12px; }
+  .back { color:var(--accent-2); text-decoration:none; font-size:14px; font-weight:600; white-space:nowrap; }
+  .lang { display:inline-flex; gap:2px; padding:3px; background:var(--card); border:1px solid var(--hair); border-radius:999px; }
+  .lang button { border:none; background:transparent; color:var(--muted); font-family:var(--font-text); font-size:13px; font-weight:700; letter-spacing:.3px; padding:6px 11px; border-radius:999px; cursor:pointer; transition:background .15s ease,color .15s ease; line-height:1; }
+  .lang button[aria-pressed="true"] { background:var(--accent); color:#fff; }
+  .lang button:hover:not([aria-pressed="true"]) { color:var(--text); }
+  header.title { padding:54px 0 20px; border-bottom:1px solid var(--hair); }
+  header.title h1 { font-size:34px; letter-spacing:-.4px; font-family:var(--font-display); font-weight:800; }
   header.title .meta { color:var(--muted); margin-top:10px; font-size:15px; }
-  main { padding:38px 0 72px; }
-  main h2 { font-size:20px; margin:34px 0 10px; color:var(--lavender); }
-  main p { margin:0 0 14px; color:#d6d2ea; }
-  main ul { margin:0 0 14px 20px; color:#d6d2ea; }
+  main { padding:30px 0 72px; }
+  main h2 { font-size:20px; margin:34px 0 10px; color:var(--accent-2); font-family:var(--font-display); }
+  main p { margin:0 0 14px; color:#cdd4e3; }
+  main ul { margin:0 0 14px 20px; color:#cdd4e3; }
   main li { margin-bottom:8px; }
   main strong { color:var(--text); }
-  a { color:var(--lavender); }
+  a { color:var(--accent-2); }
   .caps { font-size:14px; color:var(--muted); }
-  footer { border-top:1px solid var(--card-line); padding:28px 0; font-size:13px; color:var(--muted); }
-  footer a { color:var(--lavender); text-decoration:none; }
+  .lang-note { background:var(--card); border:1px solid var(--hair); border-left:3px solid var(--accent); border-radius:12px; padding:12px 16px; margin:26px 0 4px; color:var(--muted); font-size:14px; }
+  footer { border-top:1px solid var(--hair); padding:28px 0; font-size:13px; color:var(--muted); }
+  footer a { color:var(--accent-2); text-decoration:none; }
 </style>
 </head>
 <body>
 <div class="sky"></div>
-<nav><div class="wrap nav-inner"><a class="brand" href="index.html"><img class="mark" src="icon.png" alt="Sabr app icon" width="28" height="28" /> Sabr</a><a class="back" href="index.html">← Home</a></div></nav>
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><img class="mark" src="icon.png" alt="Sabr app icon" width="28" height="28" /> Sabr</a>
+    <div class="nav-right">
+      <div class="lang" role="group" data-i18n-aria="switch.aria" aria-label="Change language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="kk">KK</button>
+      </div>
+      <a class="back" href="index.html" data-i18n="back">← Home</a>
+    </div>
+  </div>
+</nav>
 
 <header class="title">
   <div class="wrap">
@@ -47,6 +72,8 @@
 
 <main>
   <div class="wrap">
+    <p class="lang-note" data-i18n="note">This document is available in English only.</p>
+
     <h2>1. Acceptance</h2>
     <p>By downloading or using Sabr (“the App”), you agree to these Terms of Use. If you do not agree, do not use the App.</p>
 
@@ -83,6 +110,37 @@
   </div>
 </main>
 
-<footer><div class="wrap">© 2026 Nematzhon Rizayev · <a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a></div></footer>
+<footer><div class="wrap">© 2026 Nematzhon Rizayev · <a href="index.html" data-i18n="foot.home">Home</a> · <a href="privacy.html" data-i18n="foot.privacy">Privacy Policy</a></div></footer>
+
+<script>
+  // Chrome-only i18n — the legal body stays English (see .lang-note).
+  var CHROME = {
+    en: { "switch.aria":"Change language", "back":"← Home", "note":"This document is available in English only.", "foot.home":"Home", "foot.privacy":"Privacy Policy" },
+    ru: { "switch.aria":"Сменить язык", "back":"← На главную", "note":"Этот документ доступен только на английском языке.", "foot.home":"Главная", "foot.privacy":"Политика конфиденциальности" },
+    kk: { "switch.aria":"Тілді ауыстыру", "back":"← Басты бет", "note":"Бұл құжат тек ағылшын тілінде қолжетімді.", "foot.home":"Басты бет", "foot.privacy":"Құпиялылық саясаты" }
+  };
+  var SUPPORTED = ["en", "ru", "kk"];
+  function pickLang() {
+    try { var s = localStorage.getItem("sabrLang"); if (SUPPORTED.indexOf(s) !== -1) return s; } catch (e) {}
+    try { var q = new URLSearchParams(location.search).get("lang"); if (SUPPORTED.indexOf(q) !== -1) return q; } catch (e) {}
+    var langs = navigator.languages || [navigator.language || "en"];
+    for (var i = 0; i < langs.length; i++) {
+      var c = (langs[i] || "").slice(0, 2).toLowerCase();
+      if (c === "ru") return "ru"; if (c === "kk") return "kk"; if (c === "en") return "en";
+    }
+    return "en";
+  }
+  function applyChrome(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) lang = "en";
+    var d = CHROME[lang];
+    document.querySelectorAll("[data-i18n]").forEach(function (el) { var k = el.getAttribute("data-i18n"); if (d[k] != null) el.textContent = d[k]; });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) { var k = el.getAttribute("data-i18n-aria"); if (d[k] != null) el.setAttribute("aria-label", d[k]); });
+    document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false"); });
+  }
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () { try { localStorage.setItem("sabrLang", b.getAttribute("data-lang")); } catch (e) {} applyChrome(b.getAttribute("data-lang")); });
+  });
+  applyChrome(pickLang());
+</script>
 </body>
 </html>
