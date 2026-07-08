@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sabr — Trade scrolling for remembrance</title>
-<meta name="description" content="Sabr blocks distracting apps and lets you earn your screen time back by completing a short Islamic learning challenge — starting with the 99 Names of Allah, with more to come. Private by design. Coming soon to the App Store." />
+<meta name="description" content="Sabr blocks distracting apps and guards your prayers — Prayer Guard pauses them until you've prayed, and you earn screen time back by learning the 99 Names of Allah. Private by design. Coming soon to the App Store." />
 
 <!-- Open Graph / social sharing -->
 <meta property="og:title" content="Sabr — Trade scrolling for remembrance" />
-<meta property="og:description" content="Block distracting apps and earn your screen time back by completing a short Islamic learning challenge — starting with the 99 Names of Allah, with more to come. Coming soon to the App Store." />
+<meta property="og:description" content="Block distracting apps, never miss a prayer with Prayer Guard, and earn your screen time back by learning the 99 Names of Allah. Coming soon to the App Store." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rizayevn.github.io/sabr-legal/" />
 <meta property="og:image" content="https://rizayevn.github.io/sabr-legal/icon.png" />
@@ -139,6 +139,22 @@
   .feature h3 { font-size: 18px; margin-bottom: 5px; }
   .feature p { color: var(--muted); font-size: 15px; }
 
+  /* ---------- Prayer Guard spotlight ---------- */
+  .spotlight { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: center; }
+  .spotlight .shot { justify-self: center; }
+  .spotlight .shot img {
+    width: 300px; max-width: 76vw; height: auto; border-radius: 30px; display: block;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 70px rgba(125,102,242,.28);
+  }
+  .tag-new {
+    display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
+    color: var(--night); background: var(--lavender); padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .feat-list { list-style: none; margin-top: 24px; display: grid; gap: 15px; }
+  .feat-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); font-size: 15.5px; }
+  .feat-list .tick { flex: 0 0 auto; color: var(--gold); font-size: 15px; line-height: 1.7; }
+  @media (max-width: 760px) { .spotlight { grid-template-columns: 1fr; gap: 30px; } }
+
   /* ---------- Challenges ---------- */
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 38px; }
   .challenge { padding: 24px 22px; display: flex; flex-direction: column; }
@@ -253,8 +269,8 @@
     <span class="badge"><span class="dot"></span> Coming soon to the App Store</span>
     <h1>Trade scrolling for <span class="accent">remembrance.</span></h1>
     <p class="lede">
-      Sabr quietly blocks the apps that pull you in. To unlock screen time, you complete a short
-      Islamic learning challenge — turning every distraction into a small act of patience.
+      Sabr quietly blocks the apps that pull you in and pauses them for prayer. To unlock screen time,
+      you complete a short Islamic learning challenge — turning every distraction into a small act of patience.
     </p>
     <div class="cta-row">
       <a class="btn-primary" href="#how">See how it works →</a>
@@ -306,6 +322,29 @@
         <div class="num">3</div>
         <h3>Build your streak</h3>
         <p>Every day under your limit grows your streak and earns badges — while every unlock teaches you something lasting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRAYER GUARD ================= -->
+<section id="prayer">
+  <div class="wrap">
+    <div class="spotlight">
+      <div class="shot">
+        <img src="screenshots/02-prayer.webp" width="300" height="650" loading="lazy" decoding="async" alt="Sabr's Prayer screen tracking four of five daily prayers with times, a streak, and a Guarded badge." />
+      </div>
+      <div class="copy">
+        <span class="tag-new">New</span>
+        <span class="eyebrow">Prayer Guard</span>
+        <h2>Never miss a prayer.</h2>
+        <p class="section-sub">Sabr tracks your five daily prayers with accurate times for your location — and Prayer Guard quietly pauses your distracting apps at prayer time, until you've prayed.</p>
+        <ul class="feat-list">
+          <li><span class="tick">✦</span> Accurate prayer times for your location, with gentle reminders before each salah.</li>
+          <li><span class="tick">✦</span> Distracting apps stay paused through the prayer window until you mark it prayed.</li>
+          <li><span class="tick">✦</span> A prayer streak that grows for every day you keep all five.</li>
+          <li><span class="tick">✦</span> Times are calculated on your device — your location never leaves your phone.</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -420,7 +459,11 @@
     <div style="margin-top: 28px;">
       <details open>
         <summary>What does Sabr do?</summary>
-        <p>Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.</p>
+        <p>Sabr blocks the apps that distract you and lets you earn screen time back by completing a short Islamic learning challenge — a quick quiz or memory match. It also tracks your five daily prayers, and Prayer Guard pauses your distracting apps at prayer time until you've prayed. It launches with the 99 Names of Allah, and more challenges (Daily Duas, short Surahs, Seerah) are on the way.</p>
+      </details>
+      <details>
+        <summary>How does Prayer Guard work?</summary>
+        <p>Sabr calculates your five daily prayer times for your location and reminds you before each salah. When a prayer comes in, Prayer Guard pauses your distracting apps for that window and keeps them paused until you mark the prayer as prayed — a gentle nudge to step away and pray. Every day you keep all five grows your prayer streak. Prayer times are computed entirely on your device.</p>
       </details>
       <details>
         <summary>How much does it cost?</summary>
