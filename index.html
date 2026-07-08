@@ -194,6 +194,32 @@
   details[open] summary::after { content: "\2212"; }
   details p { color: var(--muted); margin-top: 12px; font-size: 15px; }
 
+  /* ---------- Screens gallery ---------- */
+  .screens-head { text-align: center; }
+  .screens-head .section-sub { margin-left: auto; margin-right: auto; }
+  .gallery {
+    display: flex; gap: 22px; margin-top: 42px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0 30px;
+    /* align first/last shots with the content column on wide screens */
+    padding-inline: max(22px, calc((100vw - 1080px) / 2 + 22px));
+    scroll-padding-inline: max(22px, calc((100vw - 1080px) / 2 + 22px));
+  }
+  .gallery::-webkit-scrollbar { height: 8px; }
+  .gallery::-webkit-scrollbar-track { background: transparent; }
+  .gallery::-webkit-scrollbar-thumb { background: var(--card-line); border-radius: 999px; }
+  .gallery { scrollbar-width: thin; scrollbar-color: var(--card-line) transparent; }
+  .gallery img {
+    flex: 0 0 auto; width: 292px; max-width: 76vw; height: auto;
+    border-radius: 30px; scroll-snap-align: center; display: block;
+    box-shadow: 0 18px 50px rgba(0,0,0,.55);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .gallery img:hover { transform: translateY(-6px); box-shadow: 0 26px 60px rgba(125,102,242,.28); }
+  .swipe-hint { text-align: center; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  @media (hover: none) { .gallery img:hover { transform: none; } }
+
   /* ---------- Footer ---------- */
   footer { border-top: 1px solid var(--card-line); padding: 44px 0 40px; }
   .foot-inner { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
@@ -237,6 +263,27 @@
     <p class="cta-note">For iPhone · iOS 17 or later · Private by design</p>
   </div>
 </header>
+
+<!-- ================= SCREENS GALLERY ================= -->
+<section id="screens" style="padding-bottom: 40px;">
+  <div class="wrap screens-head">
+    <span class="eyebrow">See it in action</span>
+    <h2>A calmer home screen.</h2>
+    <p class="section-sub">From the moment you open a blocked app to the reflection at the end of your week — here's what Sabr looks like.</p>
+  </div>
+  <div class="gallery" role="list" aria-label="Sabr app screenshots">
+    <img role="listitem" src="screenshots/01-block.webp" width="292" height="633" loading="lazy" decoding="async" alt="Home screen showing today's screen time, apps used, and a locked-apps card with an Earn time button." />
+    <img role="listitem" src="screenshots/08-rules.webp" width="292" height="633" loading="lazy" decoding="async" alt="Limits screen with daily time limits and a weekday focus session." />
+    <img role="listitem" src="screenshots/03-paused.webp" width="292" height="633" loading="lazy" decoding="async" alt="A blocked app paused by Sabr, with the option to earn time or take a breath." />
+    <img role="listitem" src="screenshots/04-earn.webp" width="292" height="633" loading="lazy" decoding="async" alt="Choose a game to unlock apps: Match the Names, Quick Quiz, or Count Dhikr." />
+    <img role="listitem" src="screenshots/05-learn.webp" width="292" height="633" loading="lazy" decoding="async" alt="A quiz on the 99 Names of Allah asking which name means The King." />
+    <img role="listitem" src="screenshots/06-play.webp" width="292" height="633" loading="lazy" decoding="async" alt="A matching game to memorize the Names of Allah by pairing each name with its meaning." />
+    <img role="listitem" src="screenshots/07-dhikr.webp" width="292" height="633" loading="lazy" decoding="async" alt="A dhikr counter for SubhanAllah, tap anywhere to count to 33." />
+    <img role="listitem" src="screenshots/02-prayer.webp" width="292" height="633" loading="lazy" decoding="async" alt="Prayer screen tracking four of five daily prayers with times and a streak." />
+    <img role="listitem" src="screenshots/09-reflection.webp" width="292" height="633" loading="lazy" decoding="async" alt="Weekly reflection with days of sabr, focus wins, dhikr recited, and Names learned." />
+  </div>
+  <p class="swipe-hint">Swipe to explore →</p>
+</section>
 
 <!-- ================= HOW IT WORKS ================= -->
 <section id="how">
